@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+</head>
+<body>
+  <h1>Products</h1>
+  <ul>
+      <th:block th:each="product : ${products}">
+          <li th:utext="${product.title}">..</li>
+          <li th:utext="${product.price}">..</li>
+      </th:block>
+  </ul>
+ <hr>
+<h3>Добавить товар</h3>
+  <form th:action="@{/products/create}" method="post">
+    ID: <input type="number" name="id"/>
+    Название: <input type="text" name="title"/>
+    Описание: <input type="text" name="description"/>
+    Цена: <input type="number" name="price"/>
+    <input type="submit" value="Добавить товар">
+</form>
+</body>
+</html>
