@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Products</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
+            integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p"
+            crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js"
+            integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF"
+            crossorigin="anonymous"></script>
+
+    <style>
+        li {
+    list-style-type: none; /* Убираем маркеры */
+   }
+   ul {
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+   }
+
+
+
+
+
+
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div th:insert="parts/navbar :: navbar"></div>
+
+    <div class="container">
+        <div class="row">
+            <!--            -->
+            <div class="col-sm-3">
+                <h4>Определить вхождение в диапазон</h4><br>
+                <select name="select" class="form-select" aria-label="Default select example">
+                    <option value="1">Количество</option>
+                    <option value="2">Стоимость</option>
+                </select><br>
+                <input name="number5" type="number" class="form-control" min="0"
+                       placeholder="Число"/><br>
+                <input id="rangeСheck" class="btn btn-primary" type="submit" value="Проверить вхождение">
+
+                <script>
+                    let button = document.getElementById('rangeСheck');
+                    var number = document.getElementsByName('number5');
+                    var quantity = document.getElementsByName('quantity');
+                    var price = document.getElementsByName('price');
+                    var select = document.getElementsByName('select');
+
+                    button.onclick = () => {
+                        if(select[0].value == 1){
+                            if((quantity[0].value - quantity[0].value/100*30) <= number[0].value &&
+                            (quantity[0].value-1 + quantity[0].value/100*30 + 1) >= number[0].value){
+                                alert("Количество попадает в диапазон");
+                            } else alert("Количество НЕ попадает в диапазон");
+                        }
+
+                        if(select[0].value == 2){
+                            if((price[0].value - price[0].value/100*30) <= number[0].value &&
+                            (price[0].value-1 + price[0].value/100*30 + 1) >= number[0].value){
+                                alert("Стоимость попадает в диапазон");
+                            } else alert("Стоимость НЕ попадает в диапазон");
+                        }
+
+                    };
+
+                </script>
+
+            </div>
+            <!--            -->
+            <div class="col-sm-9">
+                <h1 th:text="${product.name_product}">..</h1>
+                <form action="#" th:action="@{'/list/update/product/' + ${product.id}}"
+                      th:object="${product}" method="post">
+                    <ul>
+                        <li>
+                            Название: <input type="text" th:field="*{name_product}" class="form-control"
+                                             placeholder="Название товара"/><br>
+                        </li>
+                        <li>
+                            Количество: <input name="quantity" type="number" th:field="*{quantity}" class="form-control" min="0"
+                                               placeholder="Количество"/><br>
+                        </li>
+                        <li>
+                            Ед. измерения: <input type="text" th:field="*{unit}" class="form-control"
+                                                  placeholder="Ед. измерения"/><br>
+                        </li>
+                        <li>
+                            Цена: <input name="price" type="number" th:field="*{price}" class="form-control" min="0"
+                                         placeholder="Цена"/><br>
+                        </li>
+                        <li>
+                            Валюта: <input type="text" th:field="*{currency}" class="form-control"
+                                         placeholder="Валюта"/><br>
+                        </li>
+                        <li>
+                            Описание: <textarea type="text" th:field="*{description}" class="form-control"
+                                                placeholder="Описание"></textarea><br>
+                        </li>
+                        <li>
+                            Куплен: <input class="form-check-input" type="checkbox" th:field="*{completed}"><br>
+                        </li>
+                    </ul>
+                    <input class="btn btn-success" type="submit" value="Сохранить изменения">
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+</body>
+</html>

@@ -4,15 +4,182 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+
+    <style>
+        li {
+    list-style-type: none; /* Убираем маркеры */
+   }
+   ul {
+    margin-left: 0; /* Отступ слева в браузере IE и Opera */
+    padding-left: 0; /* Отступ слева в браузере Firefox, Safari, Chrome */
+   }
+
+   #square {
+    width: 10px;
+    height: 40px;
+    background: #f447ff;
+    border-radius: 0px 5px 5px 0px;
+    margin-left: 0%;
+    }
+
+    .myclass{
+        padding-left: 0rem;
+    }
+
+
+
+    </style>
 </head>
 <body>
-<h1>BUYSELL</h1>
-<hr>
-<h4>Подробная информация о товаре</h4>
-<!--<b>Название списка: </b><p th:utext="${myList.name}" >..</p><br>-->
-<hr>
-<!--<form action="/main/delete/${myList.id}" method="post">-->
-<!--    <input type="submit" value="Удалить товар"/>-->
-<!--</form>-->
+
+<div class="container">
+    <div th:insert="parts/navbar :: navbar"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <!--        Изменить название у списка        -->
+                <form action="#" th:action="@{'/list/update/' + ${myListFromListService.id}}"
+                      th:object="${myListFromListService}" method="post">
+                    Название списка: <input type="text" th:field="*{name}" class="form-control"
+                                            placeholder="Название товара"/><br>
+                    <input class="btn btn-success" type="submit" value="Изменить список"/>
+                </form>
+                <br>
+                <!--        Добавить пользователя в список        -->
+                <form action="#" th:action="@{'/list/add_user/' + ${myListFromListService.id}}"
+                      method="post">
+                    Добавить пользователя в список: <input type="text" name="name" class="form-control"
+                                                           placeholder="Имя пользователя"/><br>
+                    <input class="btn btn-success" type="submit" value="Добавить пользователя"/><br>
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <td>
+
+                    <!--       Если в списке нет элементов         -->
+                    <span th:if="${myListFromFillingService == 0}">
+
+                    <h2 th:utext="${myListFromListService.name}">..</h2>
+                        <!--    Список       -->
+                    <div class="page-content page-container">
+                        <div class="padding">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                    <form action="#" th:action="@{'/home/add/' + ${myListFromListService.id}}"
+                                          th:object="${myListFilling}" method="post">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <input type="text" th:field="*{name_product}" class="form-control"
+                                                   placeholder="Название товара">
+                                        </div>
+                                        <div class="col">
+                                            <button type="submit" class="form-control btn btn-primary font-weight-bold"
+                                            >Добавить товар</button>
+                                        </div>
+                                    </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </span>
+
+                    <!--       Если в списке есть элементы         -->
+                    <span th:if="${myListFromFillingService != 0}">
+                    <h2 th:utext="${myListFromFillingService[0].lists.name}">..</h2>
+                        <!--    Список       -->
+                    <div class="page-content page-container">
+                        <div class="padding">
+                            <div class="col-md-12">
+                                <div class="card-body">
+                                        <form action="#" th:action="@{'/home/add/' + ${myListFromListService.id}}"
+                                              th:object="${myListFilling}" method="post">
+                                            <div class="row">
+                                                <div class="col-9">
+                                                    <input type="text" th:field="*{name_product}" class="form-control"
+                                                           placeholder="Название товара">
+                                                </div>
+                                                <div class="col">
+                                                    <input type="submit"
+                                                           class="form-control btn btn-primary font-weight-bold"
+                                                           value="Добавить товар">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <ul class="list-group">
+                                        <div th:each="el : ${myListFromFillingService}">
+
+                                            <li class="list-group-item myclass">
+                                                <div style="float: left" id="square"></div>
+                                                <a th:href="@{'/list/product/info/' + ${el.id}}"
+                                                   class="btn btn-outline-primary border-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                         height="16" fill="currentColor"
+                                                         class="bi bi-pencil" viewBox="0 0 16 16">
+                                                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                                    </svg>
+                                                </a>
+                                                <button class="btn btn-outline-success border-0">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                         fill="currentColor" class="bi bi-check" viewBox="0 0 16 16">
+                                                        <path d="M10.97 4.97a.75.75 0 0 1 1.07 1.05l-3.99 4.99a.75.75 0 0 1-1.08.02L4.324 8.384a.75.75 0 1 1 1.06-1.06l2.094 2.093 3.473-4.425a.267.267 0 0 1 .02-.022z"/>
+                                                    </svg>
+                                                </button>
+                                                <!--  Удаление списка  -->
+                                        <form action="#"
+                                              th:action="@{'/list/' + ${el.lists.id} + '/delete/' + ${el.id}}"
+                                              method="post"
+                                              style="float: right">
+                                            <button type="submit" class="btn btn-outline-danger border-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                    <path fill-rule="evenodd"
+                                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+
+                                                <span th:utext="${el.name_product}"></span>
+
+                                                <div style="float: right">
+                                                    <span th:if="${el.quantity != null}" th:utext="${el.quantity}"
+                                                    ></span>&nbsp;
+
+                                                    <span th:if="${el.unit != null}" th:utext="${el.unit}"
+                                                    ></span>
+
+                                                    <i th:if="${el.price != null}" th:utext="${el.price}"
+                                                       style="margin-left: 15px; margin-right: 10px;"></i>
+
+                                                    <span th:if="${el.currency != null}" th:utext="${el.currency}"
+                                                    ></span>
+                                                </div>
+                                                <p th:if="${el.description != ''}" class="text-muted"
+                                                   th:utext="${el.description}"></p>
+
+                                            </li>
+                                        </div>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+            </span>
+                </td>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+
+
 </body>
 </html>

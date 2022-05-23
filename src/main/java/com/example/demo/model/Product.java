@@ -5,22 +5,28 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.validation.constraints.Null;
 import java.util.List;
 
 @Entity
-@Table(name = "lists")
+@Table(name = "products")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyList {
+public class Product {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
     @Column(name = "name")
     private String name;
+    @Null
+    @Column(name = "price")
+    private String price;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, mappedBy = "lists")
-    private List<ListsFilling> listsFillings;
+
+
+    public Product(String name) {
+        this.name = name;
+    }
 }

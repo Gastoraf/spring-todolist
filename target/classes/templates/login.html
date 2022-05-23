@@ -5,100 +5,61 @@
     <title>Spring Security Example </title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
           integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-<div th:if="${param.error}">
-    Invalid username and password.
-</div>
-<div th:if="${param.logout}">
-    You have been logged out.
-</div>
-<form th:action="@{/login}" method="post">
-    <div class="container-fluid">
-        <!-- Pills navs -->
-        <ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
-            <li class="nav-item" role="presentation">
-                <a class="nav-link active" id="tab-login" data-mdb-toggle="pill" href="#pills-login" role="tab"
-                   aria-controls="pills-login" aria-selected="true">Login</a>
-            </li>
-            <li class="nav-item" role="presentation">
-                <a class="nav-link" id="tab-register" data-mdb-toggle="pill" href="#pills-register" role="tab"
-                   aria-controls="pills-register" aria-selected="false">Register</a>
-            </li>
-        </ul>
-        <!-- Pills navs -->
 
-        <!-- Pills content -->
-        <div class="tab-content">
-            <div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
-                <form>
-                    <div class="text-center mb-3">
-                        <p>Sign in with:</p>
-                        <button type="button" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-facebook-f"></i>
-                        </button>
 
-                        <button type="button" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-google"></i>
-                        </button>
+<!--<h1>BUYSELL</h1>-->
+<!--<hr>-->
+<!--<h4>Авторизация</h4>-->
+<!--<form th:action="@{/login}" method="post">-->
+<!--    Эл. почта: <input type="text" name="username"><br><br>-->
+<!--    Пароль: <input type="password" name="password"><br><br>-->
+<!--    <input type="hidden" name="_csrf" value="${_csrf.token}">-->
+<!--    <input type="submit" value="Вход"/>-->
+<!--</form>-->
 
-                        <button type="button" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-twitter"></i>
-                        </button>
 
-                        <button type="button" class="btn btn-link btn-floating mx-1">
-                            <i class="fab fa-github"></i>
-                        </button>
-                    </div>
 
-                    <p class="text-center">or:</p>
 
-                    <!-- username input -->
-                    <div class="form-outline mb-4">
-                        <input type="text" name="username" id="loginName" class="form-control"/>
-                        <label class="form-label" for="loginName">username</label>
-                    </div>
+<!--<div th:if="${param.error}">-->
+<!--    Invalid username and password.-->
+<!--</div>-->
+<!--<div th:if="${param.logout}">-->
+<!--    You have been logged out.-->
+<!--</div>-->
 
-                    <!-- Password input -->
-                    <div class="form-outline mb-4">
-                        <input name="password" type="password" id="loginPassword" class="form-control"/>
-                        <label class="form-label" for="loginPassword">Password</label>
-                    </div>
+<div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
 
-                    <!-- 2 column grid layout -->
-                    <div class="row mb-4">
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <!-- Checkbox -->
-                            <div class="form-check mb-3 mb-md-0">
-                                <input class="form-check-input" type="checkbox" value="" id="loginCheck" checked/>
-                                <label class="form-check-label" for="loginCheck"> Remember me </label>
-                            </div>
-                        </div>
+    <div class="row bg-white shadow-sm">
 
-                        <div class="col-md-6 d-flex justify-content-center">
-                            <!-- Simple link -->
-                            <a href="#!">Forgot password?</a>
-                        </div>
-                    </div>
-
-                    <!-- Submit button -->
-                    <button type="submit" value="Sign In" class="btn btn-primary btn-block mb-4">Sign In</button>
-
-                    <!-- Register buttons -->
-                    <div class="text-center">
-                        <p>Not a member? <a href="#!">Register</a></p>
-                    </div>
-                </form>
-            </div>
-
+        <div class="col border rounded p-4">
+            <h3 class="text-center mb-4">Вход</h3>
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Логин</label>
+                    <input type="text" name="username" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Пароль</label>
+                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
+                </div>
+                <div class="form-group form-check">
+                    <input type="checkbox" class="form-check-input" id="exampleCheck1">
+                    <label class="form-check-label" for="exampleCheck1">Запомнить</label>
+                </div>
+                <input type="hidden" name="_csrf" value="${_csrf.token}">
+                <button type="submit" class="btn btn-primary w-100">Войти</button>
+            </form>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="/registration">Впервые здесь? Зарегистрироваться</a>
+            <a class="dropdown-item" href="#">Забыли пароль?</a>
         </div>
-        <!-- Pills content -->
-
-        <!--    <div><label> User Name : <input type="text" name="username"/> </label></div>-->
-        <!--    <div><label> Password: <input type="password" name="password"/> </label></div>-->
-        <!--    <div><input type="submit" value="Sign In"/></div>-->
     </div>
-</form>
+</div>
+
+
 </body>
 </html>

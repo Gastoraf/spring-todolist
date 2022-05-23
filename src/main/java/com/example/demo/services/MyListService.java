@@ -21,14 +21,18 @@ public class MyListService {
         return listRepository.findAll();
     }
 
+    public List<MyList> findByIdUser(Long idUser){
+        return listRepository.findByIdUser(idUser);
+    }
+
     public void saveMyList(MyList myList) {
         log.info("Saving new {}", myList);
         listRepository.save(myList);
     }
 
-    public void deleteMyListById(Long id){
-        log.info("Delete by id: {}", id);
-        listRepository.deleteById(id);
+    public void deleteMyListById(Long idList){
+        log.info("Delete by id: {}", idList);
+        listRepository.deleteById(idList);
     }
 
     public MyList getMyListById(Long id){

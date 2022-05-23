@@ -5,14 +5,13 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
-@Table(name = "lists")
+@Table(name = "my_permission")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class MyList {
+public class MyPermission {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
@@ -20,7 +19,4 @@ public class MyList {
     @Column(name = "name")
     private String name;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, mappedBy = "lists")
-    private List<ListsFilling> listsFillings;
 }
