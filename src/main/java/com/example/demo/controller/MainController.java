@@ -31,6 +31,13 @@ public class MainController {
         return "home";
     }
 
+    @GetMapping("/home/search")
+    public String getMyListByName(@RequestParam(name = "name", required = false) String name, Model model, HttpServletRequest request) {
+        User user = userService.getUserByName(request.getRemoteUser());
+        model.addAttribute("myLists", myListService.getListByName(name, user.getId()));
+        System.out.println("dfssdf: {}" + request.getRemoteUser());
+        return "home";
+    }
 
 
     @PostMapping("/home/create")
@@ -53,19 +60,33 @@ public class MainController {
 
     @GetMapping("/home/{id}")
     public String listInfoById(@PathVariable Long id, Model model) {
-        if ((long) listFillingService.getListFillingByIdList(id).size() == 0) {
-            model.addAttribute("myListFromFillingService", 0);
+        if ((long) listFillingService.getListFillingByIdListCompletedTrue(id).size() == 0) {
+            model.addAttribute("myListFromFillingServiceCompletedTrue", 0);
         } else {
-            model.addAttribute("myListFromFillingService", listFillingService.getListFillingByIdList(id));
+            model.addAttribute("myListFromFillingServiceCompletedTrue", listFillingService.getListFillingByIdListCompletedTrue(id));
         }
+        if ((long) listFillingService.getListFillingByIdListCompletedFalse(id).size() == 0) {
+            model.addAttribute("myListFromFillingServiceCompletedFalse", 0);
+        } else {
+            model.addAttribute("myListFromFillingServiceCompletedFalse", listFillingService.getListFillingByIdListCompletedFalse(id));
+        }
+        model.addAttribute("usersListPermission", listPermissionService.getUsersListPermissionById(id));
         model.addAttribute("myListFromListService", myListService.getMyListById(id));
         model.addAttribute("myListFilling", new ListsFilling());
+        //Расчет стоимости
+        model.addAttribute("ToBuy", listFillingService.getToBuyMyListById(id));
+        model.addAttribute("Purchased", listFillingService.getPurchasedMyListById(id));
+        model.addAttribute("ActualPurchased", listFillingService.getActualPurchasedMyListById(id));
+        model.addAttribute("PurchasedBuyer", listFillingService.getPurchasedBuyerByIdList(id));
+        //
         model.addAttribute("newUser", new User());
         return "list";
     }
 
     @PostMapping("/home/add/{id}")
-    public String addListFilling(@PathVariable Long id, @ModelAttribute ListsFilling listsFilling) {
+    public String addListFilling(@PathVariable Long id, @ModelAttribute ListsFilling listsFilling, HttpServletRequest request) {
+        User user = userService.getUserByName(request.getRemoteUser());
+        listsFilling.setUser(user);
         listsFilling.setId(null);
         listsFilling.setCompleted(false);
 

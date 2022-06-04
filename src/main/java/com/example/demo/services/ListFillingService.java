@@ -15,9 +15,14 @@ import java.util.List;
 public class ListFillingService {
     private final ListFillingRepository listFillingRepository;
 
-    public List<ListsFilling> getListFillingByIdList(Long idList){
-        log.info("getListFillingByIdList {}", listFillingRepository.getListFillingByIdList(idList));
-        return listFillingRepository.getListFillingByIdList(idList);
+    public List<ListsFilling> getListFillingByIdListCompletedTrue(Long idList){
+        log.info("getListFillingByIdListCompletedTrue {}", listFillingRepository.getListFillingByIdListCompletedTrue(idList));
+        return listFillingRepository.getListFillingByIdListCompletedTrue(idList);
+    }
+
+    public List<ListsFilling> getListFillingByIdListCompletedFalse(Long idList){
+        log.info("getListFillingByIdListCompletedFalse {}", listFillingRepository.getListFillingByIdListCompletedFalse(idList));
+        return listFillingRepository.getListFillingByIdListCompletedFalse(idList);
     }
 
     public ListsFilling getListFillingById(Long id){
@@ -40,6 +45,38 @@ public class ListFillingService {
         log.info("Delete List Filling by id: {}", idListFilling);
         listFillingRepository.deleteById(idListFilling);
     }
+
+    //Калькулятор покупок
+    public Double getToBuyMyListById(Long id) {
+        log.info("Get by id: {}", id);
+        //TODO: Здесь можно исключение провернуть
+        return listFillingRepository.findToBuyByIdList(id);
+    }
+
+    public Double getPurchasedMyListById(Long id) {
+        log.info("Get by id: {}", id);
+        //TODO: Здесь можно исключение провернуть
+        return listFillingRepository.findPurchasedByIdList(id);
+    }
+
+    public Double getActualPurchasedMyListById(Long id) {
+        log.info("Get by id: {}", id);
+        //TODO: Здесь можно исключение провернуть
+        return listFillingRepository.findActualPurchasedByIdList(id);
+    }
+
+    public List getPurchasedBuyerByIdList(Long id) {
+        log.info("Get by id: {}", id);
+        //TODO: Здесь можно исключение провернуть
+        return listFillingRepository.findPurchasedBuyerByIdList(id);
+    }
+
+//
+//    public MyList getBoughtActuallyMyListById(Long id) {
+//        log.info("Get by id: {}", id);
+//        //TODO: Здесь можно исключение провернуть
+//        return listFillingRepository.findById(id).orElse(null);
+//    }
 
 
 }

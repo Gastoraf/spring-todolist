@@ -19,6 +19,8 @@ public class MyList {
     private Long id;
     @Column(name = "name")
     private String name;
+    @Column(name = "date_of_purchase")
+    private String date_of_purchase;
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "lists")

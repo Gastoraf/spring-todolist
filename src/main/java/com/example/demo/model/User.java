@@ -2,7 +2,6 @@ package com.example.demo.model;
 
 
 import com.example.demo.model.enums.Role;
-import com.example.demo.model.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -11,6 +10,7 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -26,6 +26,18 @@ public class User implements UserDetails {
     private String name;
     @Column(name = "active")
     private boolean active;
+    @Column(name = "email")
+    private String email;
+    @Column(name = "activation_code")
+    private String activation_code;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ListsFilling> listsFillings;
+
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, mappedBy = "user")
+    private List<ProductComments> productComments;
 
     @Column(name = "password", length = 1000)
     private String password;

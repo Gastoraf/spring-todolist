@@ -15,4 +15,12 @@ public interface MyListRepository extends JpaRepository<MyList, Long> {
 
     @Query(value = "SELECT l.* FROM lists l, list_permission l_p WHERE l.id = l_p.id_list AND l_p.id_user = :id_user", nativeQuery = true)
     List<MyList> findByIdUser(@Param("id_user") Long id);
+
+
+
+//    @Query(value = "SELECT l.* FROM lists l, list_permission l_p WHERE l.id = l_p.id_list AND l_p.id_user = :id_user", nativeQuery = true)
+//    List<MyList> findByIdUser(@Param("id_user") Long id);
+//
+//    @Query(value = "SELECT l.* FROM lists l, list_permission l_p WHERE l.id = l_p.id_list AND l_p.id_user = :id_user", nativeQuery = true)
+//    List<MyList> findByIdUser(@Param("id_user") Long id);
 }

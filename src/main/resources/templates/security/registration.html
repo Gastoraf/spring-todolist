@@ -21,16 +21,22 @@
 
         <div class="col border rounded p-4">
             <h3 class="text-center mb-4">Регистрация</h3>
+            <span class="text-success" th:utext="${messageSuccess}">..</span>
+            <span class="text-danger" th:utext="${messageDanger}">..</span>
             <form action="#" th:action="@{/registration}" method="post">
                 <div class="form-group">
-                    <label for="exampleInputEmail1">Логин</label>
-                    <input type="text" name="name" class="form-control" id="exampleInputEmail1"
+                    <label>Логин</label>
+                    <input type="text" name="name" class="form-control">
+                </div>
+                <div class="form-group">
+                    <label>Почта</label>
+                    <input type="email" name="email" class="form-control" placeholder="some@some.com"
                            aria-describedby="emailHelp">
                 </div>
                 <div class="form-group">
-                    <label for="exampleInputPassword1">Пароль</label>
-                    <input type="password" name="password" class="form-control" id="exampleInputPassword1">
-                </div>
+                    <label>Пароль</label>
+                    <input type="password" name="password" class="form-control">
+                </div><br>
                 <input type="hidden" name="_csrf" value="${_csrf.token}">
                 <button type="submit" class="btn btn-primary w-100">Зарегистрироваться</button>
             </form>

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+</head>
+<body>
+<div class="container">
+    <div th:insert="parts/navbar :: navbar"></div>
+
+
+    <h1>Блог</h1><br>
+    <h6>Последние статьи </h6><br>
+
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://hainanlife.ru/ckfinder/userfiles/files/img-20200520085701-244.jpg"
+                     class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Что купить для домашнего карантина: полный список предметов первой
+                        необходимости.</h5>
+                    <p class="card-text">Макароны и консервы исчезают с прилавков магазинов. Туалетная бумага идет
+                        нарасхват. Некоторые люди забивают гаражи таким количеством еды, что большая ее часть пропадает.
+                        Между тем специалисты рекомендуют […]</p>
+                    <a href="/blog/quarantine" class="stretched-link">Читать далее</a>
+                    <p class="card-text"><small class="text-muted">Последнее обнавление 2 года назад</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://tram-pampam.ru/wp-content/uploads/2020/07/zapisat-parna.jpg"
+                     class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">4 причины, почему совместное использование списка покупок делает жизнь
+                        лучше.</h5>
+                    <p class="card-text">Списки покупок на бумаге и ручке — это хорошо, но они могли бы быть и лучше .
+                        Когда вы составляете список покупок на бумаге, это в основном только для вас. Но что, если вы
+                        планируете поделиться своим списком покупок? […]</p>
+                    <a href="/blog/reasons-why-sharing-shopping-list-makes-life-better" class="stretched-link">Читать далее</a>
+                    <p class="card-text"><small class="text-muted">Последнее обнавление 1 мес назад</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="card mb-3">
+        <div class="row g-0">
+            <div class="col-md-4">
+                <img src="https://primpress.ru/img/articles/0806211323391dp.jpg"
+                     class="img-fluid rounded-start" alt="...">
+            </div>
+            <div class="col-md-8">
+                <div class="card-body">
+                    <h5 class="card-title">Обнимите свою кухню.</h5>
+                    <p class="card-text">Кухня – неотъемлемая часть любого дома. Ежедневно люди проводят там до двух
+                        третей своего времени. Однако, если вы не находите кухню приятным местом, возможно, вы не
+                        сможете принять ее и проявить энтузиазм, чтобы что-то приготовить. Чтобы предотвратить это,
+                        узнайте […]</p>
+                    <a href="/blog/kitchen-motivation" class="stretched-link">Читать далее</a>
+                    <p class="card-text"><small class="text-muted">Последнее обновление 2 года назад</small></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+</body>
+</html>

@@ -1,26 +1,25 @@
 package com.example.demo.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-
+import javax.validation.constraints.Null;
 
 @Entity
-@Table(name = "list_permission")
+@Table(name = "product_comments")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ListPermission {
-
+public class ProductComments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
-
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_list")
-    private MyList lists;
+    @Column(name = "comment")
+    private String comment;
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
@@ -29,8 +28,7 @@ public class ListPermission {
 
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "id_permission")
-    private MyPermission myPermission;
-
+    @JoinColumn(name = "id_list_filling")
+    private ListsFilling list_filling;
 
 }

@@ -1,7 +1,7 @@
 package com.example.demo.repositories;
 
-import com.example.demo.model.ListPermission;
 import com.example.demo.model.MyList;
+import com.example.demo.model.ProductComments;
 import com.example.demo.model.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -11,10 +11,8 @@ import org.springframework.stereotype.Repository;
 import java.util.List;
 
 @Repository
-public interface ListPermissionRepository extends JpaRepository<ListPermission, Long> {
-    ListPermission findByUserName(String name);
+public interface ProductCommentsRepository extends JpaRepository<ProductComments, Long> {
 
-    ListPermission findByUserAndLists(User user, MyList myList);
-
-
+    @Query(value = "SELECT * FROM product_comments WHERE id_list_filling = :id_list_filling", nativeQuery = true)
+    List<ProductComments> findByIdListsFilling(@Param("id_list_filling") Long id);
 }

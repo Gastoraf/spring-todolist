@@ -1,7 +1,7 @@
 spring:
   datasource:
     driverClassName: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3307/listcery
+    url: jdbc:mysql://127.0.0.1:3306/listcery
     username: root
     password: root
   jpa:
@@ -10,3 +10,11 @@ spring:
     show-sql: true
   freemarker:
     expose-request-attributes: true
+  mail:
+    host: smtp.yandex.ru
+    username: gfdshgsdfhdsfh@yandex.ru
+    password: gsdhsdhc4545%$V
+    port: 465
+    protocol: smtps
+#    smtp - для не защищенного
+    debug: true

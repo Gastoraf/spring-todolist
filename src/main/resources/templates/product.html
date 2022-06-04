@@ -29,6 +29,7 @@
 
 
 
+
     </style>
 </head>
 <body>
@@ -43,7 +44,7 @@
                 <h4>Определить вхождение в диапазон</h4><br>
                 <select name="select" class="form-select" aria-label="Default select example">
                     <option value="1">Количество</option>
-                    <option value="2">Стоимость</option>
+                    <option style="background: red" value="2">Стоимость</option>
                 </select><br>
                 <input name="number5" type="number" class="form-control" min="0"
                        placeholder="Число"/><br>
@@ -73,12 +74,13 @@
 
                     };
 
+
                 </script>
 
             </div>
             <!--            -->
             <div class="col-sm-9">
-                <h1 th:text="${product.name_product}">..</h1>
+                <h1 th:text="${product.user.name}">..</h1>
                 <form action="#" th:action="@{'/list/update/product/' + ${product.id}}"
                       th:object="${product}" method="post">
                     <ul>
@@ -87,24 +89,44 @@
                                              placeholder="Название товара"/><br>
                         </li>
                         <li>
-                            Количество: <input name="quantity" type="number" th:field="*{quantity}" class="form-control" min="0"
+                            Количество: <input name="quantity" type="number" th:field="*{quantity}" class="form-control"
+                                               min="0"
                                                placeholder="Количество"/><br>
                         </li>
                         <li>
                             Ед. измерения: <input type="text" th:field="*{unit}" class="form-control"
                                                   placeholder="Ед. измерения"/><br>
                         </li>
+
                         <li>
-                            Цена: <input name="price" type="number" th:field="*{price}" class="form-control" min="0"
-                                         placeholder="Цена"/><br>
+                            Планируемая цена: <input name="price" type="number" th:field="*{price}" class="form-control" min="0"
+                                         placeholder="Планируемая цена"/><br>
+                        </li>
+                        <li>
+                            Фактическая стоимость: <input name="actual_price" type="number" th:field="*{actual_price}" class="form-control" min="0"
+                                              placeholder="Фактическая стоимость"/><br>
                         </li>
                         <li>
                             Валюта: <input type="text" th:field="*{currency}" class="form-control"
-                                         placeholder="Валюта"/><br>
+                                           placeholder="Валюта"/><br>
+                        </li>
+                        <li>
+                            <p>Выберите категорию:</p>
+                            <input type="color" list="colorList" th:field="*{category}">
+                            <datalist id="colorList">
+                                <option value="#3365b5" label="Синий">
+                                <option value="#7952c7" label="Фиолетовый">
+                                <option value="#99d971" label="Зелёный">
+                                <option value="#db7f65" label="Оранжевый">
+                            </datalist>
                         </li>
                         <li>
                             Описание: <textarea type="text" th:field="*{description}" class="form-control"
                                                 placeholder="Описание"></textarea><br>
+                        </li>
+                        <li>
+                            Кто пойдет покупать: <input type="text" th:field="*{user.name}" class="form-control"
+                                           placeholder="Кто пойдет покупать"/><br>
                         </li>
                         <li>
                             Куплен: <input class="form-check-input" type="checkbox" th:field="*{completed}"><br>
@@ -117,7 +139,6 @@
         </div>
     </div>
 </div>
-
 
 
 </body>

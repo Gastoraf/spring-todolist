@@ -7,6 +7,7 @@ import lombok.ToString;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
+import java.util.List;
 
 @Entity
 @Table(name = "lists_filling")
@@ -31,8 +32,14 @@ public class ListsFilling {
     @Column(name = "price")
     private Double price;
 
+    @Column(name = "actual_price")
+    private Double actual_price;
+
     @Column(name = "currency")
     private String currency;
+
+    @Column(name = "category")
+    private String category;
 
     @Null
     @Column(name = "description")
@@ -41,10 +48,20 @@ public class ListsFilling {
     @Column(name = "completed")
     private Boolean completed;
 
+    @OneToMany(fetch = FetchType.LAZY,
+            cascade = CascadeType.ALL, mappedBy = "list_filling")
+    private List<ProductComments> productComments;
+
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_list")
     private MyList lists;
+
+    @Null
+    @ToString.Exclude
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "id_buyer")
+    private User user;
 
 
     public MyList getLists() {

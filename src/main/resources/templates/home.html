@@ -18,9 +18,11 @@
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
-                <form action="/home/search" method="post">
-                    <input type="text" name="name" placeholder="Название списка"/><br><br>
-                    <input type="submit" value="Найти"/>
+                <h2>Найти список</h2>
+                <form th:action="@{/home/search}" method="get">
+                    <input class="form-control" type="text" name="name" placeholder="Название списка"/><br>
+                    <input type="submit" value="Найти" class="form-control btn btn-primary font-weight-bold"/>
+
                 </form>
             </div>
             <div class="col-sm-9">
