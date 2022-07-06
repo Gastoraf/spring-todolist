@@ -40,7 +40,7 @@
 
                     <form th:action="@{/logout}" method="post">
                         <input type="hidden" name="_csrf" value="${_csrf.token}">
-                        <button type="submit"  class="btn btn-light">Выйти</button>
+                        <button type="submit"  class="btn btn-light">Выйти(<span th:utext="${#httpServletRequest.remoteUser}"></span>)</button>
                     </form>
                     </li>
                 </ul>

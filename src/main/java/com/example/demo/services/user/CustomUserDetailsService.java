@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.services.user;
 
 import com.example.demo.model.User;
 import com.example.demo.repositories.UserRepository;
@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class CustomUserDetailsService implements UserDetailsService {
+
+
+
     private final UserRepository userRepository;
 
 
@@ -19,4 +22,6 @@ public class CustomUserDetailsService implements UserDetailsService {
     public UserDetails loadUserByUsername(String name) throws UsernameNotFoundException {
         return userRepository.findByName(name);
     }
+
+
 }

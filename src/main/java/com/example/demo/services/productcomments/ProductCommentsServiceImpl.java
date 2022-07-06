@@ -1,9 +1,6 @@
-package com.example.demo.services;
+package com.example.demo.services.productcomments;
 
-import com.example.demo.model.ListsFilling;
-import com.example.demo.model.MyList;
 import com.example.demo.model.ProductComments;
-import com.example.demo.repositories.MyPermissionRepository;
 import com.example.demo.repositories.ProductCommentsRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -14,18 +11,21 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ProductCommentsService {
+public class ProductCommentsServiceImpl implements ProductCommentsService {
     private final ProductCommentsRepository productCommentsRepository;
 
+    @Override
     public List<ProductComments> findByIdListsFilling(Long idProduct) {
         return productCommentsRepository.findByIdListsFilling(idProduct);
     }
 
+    @Override
     public void saveProductComment(ProductComments productComments) {
         log.info("Saving Product Comment {}", productComments);
         productCommentsRepository.save(productComments);
     }
 
+    @Override
     public void deleteProductCommentById(Long idProductComment){
         log.info("Delete Product Comment by id: {}", idProductComment);
         productCommentsRepository.deleteById(idProductComment);

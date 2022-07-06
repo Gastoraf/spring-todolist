@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.services.mailsender;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -7,13 +7,14 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
 @Service
-public class MailSenderService {
+public class MailSenderServiceImpl implements MailSenderService {
     @Autowired
     private JavaMailSender mailSender;
 
     @Value("${spring.mail.username}")
     private String username;
 
+    @Override
     public void send(String emailTo, String subject, String message){
         SimpleMailMessage simpleMailMessage = new SimpleMailMessage();
 

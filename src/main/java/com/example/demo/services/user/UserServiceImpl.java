@@ -1,9 +1,9 @@
-package com.example.demo.services;
+package com.example.demo.services.user;
 
 import com.example.demo.model.User;
 import com.example.demo.model.enums.Role;
 import com.example.demo.repositories.UserRepository;
-import freemarker.template.utility.StringUtil;
+import com.example.demo.services.mailsender.MailSenderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,13 +16,14 @@ import java.util.UUID;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class UserService {
+public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Autowired
     private MailSenderService mailSenderService;
 
+    @Override
     public boolean createUser(User user) {
         String userName = user.getName();
         if (userRepository.findByName(userName) != null) return false;
@@ -33,10 +34,10 @@ public class UserService {
         log.info("Saving new User with name: {}", userName);
         userRepository.save(user);
 
-        if (!StringUtils.isEmpty(user.getEmail())){
+        if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-              "Hello, %s \n" +
-                      "Welcome to Sweater. Please, visit next link: http://localhost:8080/activate/%s",
+                    "Привет, %s \n" +
+                            "Добро пожаловать в Listcery. Пожалуйста, подтвердите Ваш аккаунт перейдя по следующей ссылке: http://localhost:8080/activate/%s",
                     user.getName(),
                     user.getActivation_code()
             );
@@ -47,22 +48,24 @@ public class UserService {
         return true;
     }
 
-    public User getUserByName(String name){
-        if (userRepository.findByName(name) != null){
+    @Override
+    public User getUserByName(String name) {
+        if (userRepository.findByName(name) != null) {
             return userRepository.findByName(name);
         }
         return null;
     }
 
-    public User getUserById(Long id){
+    @Override
+    public User getUserById(Long id) {
         userRepository.getById(id);
         return userRepository.getById(id);
     }
 
-
+    @Override
     public boolean activateUser(String code) {
         User user = userRepository.findByActivation_code(code);
-        if (user == null){
+        if (user == null) {
             return false;
         }
 

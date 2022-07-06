@@ -80,7 +80,7 @@
             </div>
             <!--            -->
             <div class="col-sm-9">
-                <h1 th:text="${product.user.name}">..</h1>
+                <h1 th:text="${product.name_product}">..</h1>
                 <form action="#" th:action="@{'/list/update/product/' + ${product.id}}"
                       th:object="${product}" method="post">
                     <ul>

@@ -1,9 +1,6 @@
 package com.example.demo.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
@@ -12,6 +9,8 @@ import java.util.List;
 @Entity
 @Table(name = "lists_filling")
 @Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
 public class ListsFilling {
@@ -47,6 +46,14 @@ public class ListsFilling {
 
     @Column(name = "completed")
     private Boolean completed;
+
+    public Boolean getCompleted() {
+        return completed;
+    }
+
+    public void setCompleted(Boolean completed) {
+        this.completed = completed;
+    }
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "list_filling")

@@ -1,27 +1,36 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.*;
+import com.example.demo.model.ListPermission;
+import com.example.demo.model.ListsFilling;
+import com.example.demo.model.MyList;
+import com.example.demo.model.User;
+import com.example.demo.model.dto.ProductsDto;
+import com.example.demo.model.mapping.ProductsMapper;
 import com.example.demo.services.*;
-import lombok.AllArgsConstructor;
-import org.springframework.security.core.Authentication;
+import com.example.demo.services.listpermission.ListPermissionService;
+import com.example.demo.services.mylist.MyListService;
+import com.example.demo.services.mypermission.MyPermissionService;
+import com.example.demo.services.user.UserService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
-//import com.example.demo.services.ListFillingService;
+import com.example.demo.services.listfilling.ListFillingService;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 public class MainController {
     private final MyListService myListService;
     private final ListFillingService listFillingService;
-    private final ProductService productService;
+    private final ProductsService productsService;
     private final ListPermissionService listPermissionService;
     private final UserService userService;
     private final MyPermissionService myPermissionService;
+
+    private final ProductsMapper productsMapper;
 
     @GetMapping("/home")
     public String getMyLists(@RequestParam(name = "name", required = false) String name, Model model, HttpServletRequest request) {
@@ -29,6 +38,11 @@ public class MainController {
         model.addAttribute("myLists", myListService.findByIdUser(user.getId()));
         System.out.println("dfssdf: {}" + request.getRemoteUser());
         return "home";
+    }
+
+    @GetMapping("/home/user/{id}")
+    public ProductsDto getMyLists(@PathVariable Integer id) {
+        return productsMapper.toDto(productsService.getProductById(id));
     }
 
     @GetMapping("/home/search")

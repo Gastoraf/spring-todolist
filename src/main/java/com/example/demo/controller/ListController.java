@@ -2,6 +2,13 @@ package com.example.demo.controller;
 
 import com.example.demo.model.*;
 import com.example.demo.services.*;
+import com.example.demo.services.listfilling.ListFillingService;
+import com.example.demo.services.listpermission.ListPermissionService;
+import com.example.demo.services.mailsender.MailSenderService;
+import com.example.demo.services.mylist.MyListService;
+import com.example.demo.services.mypermission.MyPermissionService;
+import com.example.demo.services.productcomments.ProductCommentsService;
+import com.example.demo.services.user.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,7 +22,7 @@ import java.util.List;
 @AllArgsConstructor
 public class ListController {
     private final ListFillingService listFillingService;
-    private final ProductService productService;
+    private final ProductsService productService;
     private final MyListService myListService;
     private final ListPermissionService listPermissionService;
     private final UserService userService;

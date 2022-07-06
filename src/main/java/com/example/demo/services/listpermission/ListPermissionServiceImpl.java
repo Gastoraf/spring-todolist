@@ -1,4 +1,4 @@
-package com.example.demo.services;
+package com.example.demo.services.listpermission;
 
 import com.example.demo.model.ListPermission;
 import com.example.demo.model.User;
@@ -14,33 +14,38 @@ import java.util.List;
 @Service
 @Slf4j
 @RequiredArgsConstructor
-public class ListPermissionService {
+public class ListPermissionServiceImpl implements ListPermissionService {
     private final ListPermissionRepository listPermissionRepository;
     private final UserRepository userRepository;
     private final MyListRepository myListRepository;
 
+    @Override
     public void addListPermission(ListPermission listPpermission) {
         log.info("Saving new ListPermission {}", listPpermission);
         listPermissionRepository.save(listPpermission);
     }
 
+    @Override
     public void deleteListPermissionById(Long id){
         log.info("Delete ListPermission by id: {}", id);
         listPermissionRepository.deleteById(id);
     }
 
+    @Override
     public void deleteById_userAndId_list(Long id_user, Long id_list){
         log.info("Delete ListPermission by id: {}", id_user);
         ListPermission listPermission = listPermissionRepository.findByUserAndLists(userRepository.getById(id_user), myListRepository.getById(id_list));
         listPermissionRepository.deleteById(listPermission.getId());
     }
 
+    @Override
     public ListPermission getListPermissionById(Long id){
         log.info("Get ListPermission by id: {}", id);
         //TODO: Здесь можно исключение провернуть
         return listPermissionRepository.findById(id).orElse(null);
     }
 
+    @Override
     public List<User> getUsersListPermissionById(Long idList){
         log.info("Get getUsersListPermissionById: {}", idList);
         //TODO: Здесь можно исключение провернуть
