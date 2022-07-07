@@ -1,6 +1,6 @@
 //package com.example.demo.services;
 //
-//import com.example.demo.model.MyList;
+//import com.example.demo.model.entity.MyList;
 //import com.example.demo.model.Product;
 //import com.example.demo.repositories.MyListRepository;
 //import com.example.demo.repositories.ProductRepository;

@@ -1,37 +1,32 @@
 package com.example.demo.services.listfilling;
 
-import com.example.demo.model.ListsFilling;
-import com.example.demo.model.MyList;
-import com.example.demo.repositories.ListFillingRepository;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
+import com.example.demo.model.entity.ListsFilling;
 
 import java.util.List;
 
 
 public interface ListFillingService {
 
-    public List<ListsFilling> getListFillingByIdListCompletedTrue(Long idList);
+    List<ListsFilling> getListFillingByIdListCompletedTrue(Long idList);
 
-    public List<ListsFilling> getListFillingByIdListCompletedFalse(Long idList);
+    List<ListsFilling> getListFillingByIdListCompletedFalse(Long idList);
 
-    public ListsFilling getListFillingById(Long id);
+    ListsFilling getListFillingById(Long id);
 
-    public String getNameListFillingByIdList(Long idList);
+    String getNameListFillingByIdList(Long idList);
 
-    public void saveListFilling(ListsFilling listFilling);
+    ListsFilling saveListFilling(ListsFilling listFilling);
 
-    public void deleteListFillingById(Long idListFilling);
+    void deleteListFillingById(Long idListFilling);
 
     //Калькулятор покупок
-    public Double getToBuyMyListById(Long id);
+    Double getToBuyMyListById(Long id);
 
-    public Double getPurchasedMyListById(Long id);
+    Double getPurchasedMyListById(Long id);
 
-    public Double getActualPurchasedMyListById(Long id);
+    Double getActualPurchasedMyListById(Long id);
 
-    public List getPurchasedBuyerByIdList(Long id);
+    List getPurchasedBuyerByIdList(Long id);
 
 
 

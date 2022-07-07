@@ -1,6 +1,9 @@
 package com.example.demo.model.entity;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -12,7 +15,6 @@ import javax.persistence.Id;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-@Data
 public class Products {
 
     @Id
@@ -20,4 +22,6 @@ public class Products {
     private int id;
     private String name;
     private double price;
+
+
 }

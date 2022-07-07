@@ -1,7 +1,7 @@
-package com.example.demo.model;
+package com.example.demo.model.entity;
 
+import com.example.demo.model.entity.ListsFilling;
 import lombok.*;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.List;

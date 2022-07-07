@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.*;
+import com.example.demo.model.entity.*;
+import com.example.demo.model.mapping.ListsFillingMapper;
+import com.example.demo.model.mapping.ProductCommentsMapper;
 import com.example.demo.services.*;
 import com.example.demo.services.listfilling.ListFillingService;
 import com.example.demo.services.listpermission.ListPermissionService;
@@ -30,10 +32,15 @@ public class ListController {
     private final ProductCommentsService productCommentsService;
     private final MailSenderService mailSenderService;
 
+    private final ListsFillingMapper listsFillingMapper;
+    private final ProductCommentsMapper productCommentsMapper;
+
 
     @PostMapping("/list/{idList}/delete/{id}")
     public String deleteListFilling(@PathVariable Long idList, @PathVariable Long id) {
         listFillingService.deleteListFillingById(id);
+//        listsFillingMapper.dtoToModel(listFillingService.deleteListFillingById(id));
+
         return "redirect:/home/" + idList;
     }
 
@@ -128,7 +135,7 @@ public class ListController {
 
     @GetMapping("/list/product/comments/{idProduct}")
     public String commentsProductById(@PathVariable Long idProduct, Model model) {
-        model.addAttribute("comments", productCommentsService.findByIdListsFilling(idProduct));
+        model.addAttribute("comments", productCommentsMapper.modelToDto(productCommentsService.findByIdListsFilling(idProduct)) );
         model.addAttribute("product", listFillingService.getListFillingById(idProduct));
         return "/product-comments";
     }

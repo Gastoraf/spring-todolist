@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductsDto {
-    private int id;
+public class MyPermissionDto {
+    private Long id;
+
     private String name;
-    private double price;
 }

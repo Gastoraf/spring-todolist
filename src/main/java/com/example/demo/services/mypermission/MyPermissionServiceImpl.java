@@ -1,6 +1,6 @@
 package com.example.demo.services.mypermission;
 
-import com.example.demo.model.MyPermission;
+import com.example.demo.model.entity.MyPermission;
 import com.example.demo.repositories.MyPermissionRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

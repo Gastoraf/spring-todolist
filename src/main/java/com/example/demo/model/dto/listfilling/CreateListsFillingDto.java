@@ -1,4 +1,4 @@
-package com.example.demo.model.dto;
+package com.example.demo.model.dto.listfilling;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -9,8 +9,8 @@ import lombok.Setter;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductsDto {
-    private int id;
-    private String name;
-    private double price;
+public class CreateListsFillingDto {
+
+    private String name_product;
+
 }

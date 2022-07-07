@@ -1,6 +1,8 @@
-package com.example.demo.model;
+package com.example.demo.model.entity;
 
 
+import com.example.demo.model.entity.ListsFilling;
+import com.example.demo.model.entity.ProductComments;
 import com.example.demo.model.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;

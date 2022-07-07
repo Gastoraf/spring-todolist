@@ -1,6 +1,6 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.User;
+import com.example.demo.model.entity.User;
 import com.example.demo.services.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;

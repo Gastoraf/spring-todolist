@@ -16,5 +16,5 @@ spring:
     password: gsdhsdhc4545%$V
     port: 465
     protocol: smtps
-#    smtp - для не защищенного
+    #    smtp - для не защищенного
     debug: true

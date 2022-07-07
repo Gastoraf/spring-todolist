@@ -1,7 +1,7 @@
 package com.example.demo.services.listpermission;
 
-import com.example.demo.model.ListPermission;
-import com.example.demo.model.User;
+import com.example.demo.model.entity.ListPermission;
+import com.example.demo.model.entity.User;
 
 import java.util.List;
 

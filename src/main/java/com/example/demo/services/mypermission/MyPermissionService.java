@@ -1,6 +1,6 @@
 package com.example.demo.services.mypermission;
 
-import com.example.demo.model.MyPermission;
+import com.example.demo.model.entity.MyPermission;
 
 
 public interface MyPermissionService {

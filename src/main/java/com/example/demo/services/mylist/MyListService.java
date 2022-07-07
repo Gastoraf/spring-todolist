@@ -1,6 +1,6 @@
 package com.example.demo.services.mylist;
 
-import com.example.demo.model.MyList;
+import com.example.demo.model.entity.MyList;
 
 import java.util.List;
 

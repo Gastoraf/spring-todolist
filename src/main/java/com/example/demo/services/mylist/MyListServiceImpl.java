@@ -1,10 +1,9 @@
 package com.example.demo.services.mylist;
 
-import com.example.demo.model.MyList;
+import com.example.demo.model.entity.MyList;
 import com.example.demo.repositories.MyListRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;

@@ -1,6 +1,6 @@
 package com.example.demo.services.user;
 
-import com.example.demo.model.User;
+import com.example.demo.model.entity.User;
 import com.example.demo.model.enums.Role;
 import com.example.demo.repositories.UserRepository;
 import com.example.demo.services.mailsender.MailSenderService;

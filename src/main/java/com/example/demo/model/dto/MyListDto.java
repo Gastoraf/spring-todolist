@@ -1,16 +1,24 @@
 package com.example.demo.model.dto;
 
+import com.example.demo.model.entity.ListsFilling;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.List;
+
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class ProductsDto {
-    private int id;
+public class MyListDto {
+
+    private Long id;
+
     private String name;
-    private double price;
+
+    private String date_of_purchase;
+
+    private List<ListsFilling> listsFillings;
 }

@@ -1,18 +1,14 @@
-package com.example.demo.model;
+package com.example.demo.model.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
-import javax.validation.constraints.Null;
 
-@Entity
-@Table(name = "product_comments")
-@Data
-@AllArgsConstructor
+@Getter
+@Setter
 @NoArgsConstructor
+@AllArgsConstructor
+@Entity
 public class ProductComments {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

@@ -1,7 +1,7 @@
 package com.example.demo.services.listpermission;
 
-import com.example.demo.model.ListPermission;
-import com.example.demo.model.User;
+import com.example.demo.model.entity.ListPermission;
+import com.example.demo.model.entity.User;
 import com.example.demo.repositories.ListPermissionRepository;
 import com.example.demo.repositories.MyListRepository;
 import com.example.demo.repositories.UserRepository;

@@ -1,10 +1,12 @@
 package com.example.demo.controller;
 
-import com.example.demo.model.ListPermission;
-import com.example.demo.model.ListsFilling;
-import com.example.demo.model.MyList;
-import com.example.demo.model.User;
+import com.example.demo.model.dto.listfilling.CreateListsFillingDto;
+import com.example.demo.model.entity.ListPermission;
+import com.example.demo.model.entity.ListsFilling;
+import com.example.demo.model.entity.MyList;
+import com.example.demo.model.entity.User;
 import com.example.demo.model.dto.ProductsDto;
+import com.example.demo.model.mapping.ListsFillingMapper;
 import com.example.demo.model.mapping.ProductsMapper;
 import com.example.demo.services.*;
 import com.example.demo.services.listpermission.ListPermissionService;
@@ -31,6 +33,7 @@ public class MainController {
     private final MyPermissionService myPermissionService;
 
     private final ProductsMapper productsMapper;
+    private final ListsFillingMapper listsFillingMapper;
 
     @GetMapping("/home")
     public String getMyLists(@RequestParam(name = "name", required = false) String name, Model model, HttpServletRequest request) {
@@ -98,14 +101,18 @@ public class MainController {
     }
 
     @PostMapping("/home/add/{id}")
-    public String addListFilling(@PathVariable Long id, @ModelAttribute ListsFilling listsFilling, HttpServletRequest request) {
+    public String addListFilling(@PathVariable Long id, @ModelAttribute CreateListsFillingDto createListsFillingDto, HttpServletRequest request) {
         User user = userService.getUserByName(request.getRemoteUser());
+        ListsFilling listsFilling = listsFillingMapper.dtoToModel(createListsFillingDto);
         listsFilling.setUser(user);
         listsFilling.setId(null);
         listsFilling.setCompleted(false);
 
+
         listsFilling.setLists(myListService.getMyListById(id));
-        listFillingService.saveListFilling(listsFilling);
+
+        listsFillingMapper.modelToDto(listFillingService.saveListFilling(listsFilling));
+//        listFillingService.saveListFilling(listsFilling);
 
         return "redirect:/home/" + id;
     }

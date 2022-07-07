@@ -1,6 +1,6 @@
 package com.example.demo.services.user;
 
-import com.example.demo.model.User;
+import com.example.demo.model.entity.User;
 
 
 public interface UserService {

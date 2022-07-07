@@ -1,6 +1,6 @@
 package com.example.demo.services.productcomments;
 
-import com.example.demo.model.ProductComments;
+import com.example.demo.model.entity.ProductComments;
 
 import java.util.List;
 

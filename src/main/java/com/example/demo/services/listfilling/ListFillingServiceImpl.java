@@ -1,10 +1,9 @@
 package com.example.demo.services.listfilling;
 
-import com.example.demo.model.ListsFilling;
+import com.example.demo.model.entity.ListsFilling;
 import com.example.demo.repositories.ListFillingRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -42,9 +41,9 @@ public class ListFillingServiceImpl implements ListFillingService {
 
     @Override
 
-    public void saveListFilling(ListsFilling listFilling) {
+    public ListsFilling saveListFilling(ListsFilling listFilling) {
         log.info("Saving List Filling {}", listFilling);
-        listFillingRepository.save(listFilling);
+        return listFillingRepository.save(listFilling);
     }
 
     @Override
