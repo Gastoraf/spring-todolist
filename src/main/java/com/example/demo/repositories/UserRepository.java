@@ -16,7 +16,9 @@ public interface UserRepository extends JpaRepository<User, Long> {
     @Query(value = "SELECT u.* FROM users u, list_permission l_p WHERE u.id = l_p.id_user AND l_p.id_list = :id_list", nativeQuery = true)
     List<User> findUsersByIdList(@Param("id_list") Long id);
 
-    @Query(value = "SELECT u.* FROM users u WHERE u.activation_code = :code", nativeQuery = true)
-    User findByActivation_code(@Param("code") String code);
+//    @Query(value = "SELECT u.* FROM users u WHERE u.activationCode = :code", nativeQuery = true)
+//    User findByActivation_code(@Param("code") String code);
+
+    User findByActivationCode(String code);
 
 }

@@ -16,7 +16,7 @@ public class ListFillingServiceImpl implements ListFillingService {
 
     @Override
     public List<ListsFilling> getListFillingByIdListCompletedTrue(Long idList){
-        log.info("getListFillingByIdListCompletedTrue {}", listFillingRepository.getListFillingByIdListCompletedTrue(idList));
+        log.info("findByCompletedTrueAndListsId {}", listFillingRepository.getListFillingByIdListCompletedTrue(idList));
         return listFillingRepository.getListFillingByIdListCompletedTrue(idList);
     }
 
@@ -31,12 +31,6 @@ public class ListFillingServiceImpl implements ListFillingService {
         log.info("Get by id (getListFillingById): {}", id);
         //TODO: Здесь можно исключение провернуть
         return listFillingRepository.findById(id).orElse(null);
-    }
-
-    @Override
-    public String getNameListFillingByIdList(Long idList){
-        log.info("getNameListFillingByIdList {}", listFillingRepository.getNameListFillingByIdList(idList));
-        return listFillingRepository.getNameListFillingByIdList(idList);
     }
 
     @Override

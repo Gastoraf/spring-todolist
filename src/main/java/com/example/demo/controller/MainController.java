@@ -5,7 +5,7 @@ import com.example.demo.model.entity.ListPermission;
 import com.example.demo.model.entity.ListsFilling;
 import com.example.demo.model.entity.MyList;
 import com.example.demo.model.entity.User;
-import com.example.demo.model.dto.ProductsDto;
+import com.example.demo.model.dto.products.ProductsDto;
 import com.example.demo.model.mapping.ListsFillingMapper;
 import com.example.demo.model.mapping.ProductsMapper;
 import com.example.demo.services.*;
@@ -56,23 +56,9 @@ public class MainController {
         return "home";
     }
 
-
-    @PostMapping("/home/create")
-    public String createList(MyList myList, HttpServletRequest request) {
-        User user = userService.getUserByName(request.getRemoteUser());
-        myListService.saveMyList(myList);
-        ListPermission listPermission = new ListPermission();
-        listPermission.setLists(myList);
-        listPermission.setUser(user);
-        listPermission.setMyPermission(myPermissionService.getMyPermissionById(1L));
-        listPermissionService.addListPermission(listPermission);
-        return "redirect:/home";
-    }
-
-    @PostMapping("/home/delete/{id}")
-    public String deleteList(@PathVariable Long id) {
-        myListService.deleteMyListById(id);
-        return "redirect:/home";
+    @GetMapping("/")
+    public String getHomePage() {
+        return "main";
     }
 
     @GetMapping("/home/{id}")
@@ -100,27 +86,39 @@ public class MainController {
         return "list";
     }
 
+
+    @PostMapping("/home/create")
+    public String createList(MyList myList, HttpServletRequest request) {
+        User user = userService.getUserByName(request.getRemoteUser());
+        myListService.saveMyList(myList);
+        ListPermission listPermission = new ListPermission();
+        listPermission.setLists(myList);
+        listPermission.setUser(user);
+        listPermission.setMyPermission(myPermissionService.getMyPermissionById(1L));
+        listPermissionService.addListPermission(listPermission);
+        return "redirect:/home";
+    }
+
+
     @PostMapping("/home/add/{id}")
     public String addListFilling(@PathVariable Long id, @ModelAttribute CreateListsFillingDto createListsFillingDto, HttpServletRequest request) {
-        User user = userService.getUserByName(request.getRemoteUser());
         ListsFilling listsFilling = listsFillingMapper.dtoToModel(createListsFillingDto);
-        listsFilling.setUser(user);
+        listsFilling.setUser(userService.getUserByName(request.getRemoteUser()));
         listsFilling.setId(null);
         listsFilling.setCompleted(false);
-
 
         listsFilling.setLists(myListService.getMyListById(id));
 
         listsFillingMapper.modelToDto(listFillingService.saveListFilling(listsFilling));
-//        listFillingService.saveListFilling(listsFilling);
 
         return "redirect:/home/" + id;
     }
 
 
-    @GetMapping("/")
-    public String getHomePage() {
-        return "main";
+    @PostMapping("/home/delete/{id}")
+    public String deleteList(@PathVariable Long id) {
+        myListService.deleteMyListById(id);
+        return "redirect:/home";
     }
 
 

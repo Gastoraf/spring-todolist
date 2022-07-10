@@ -1,35 +1,55 @@
 package com.example.demo;
 
-import com.example.demo.model.dto.ProductsDto;
+
+import com.example.demo.controller.ListController;
+import com.example.demo.controller.MainController;
+import com.example.demo.model.dto.products.ProductsDto;
+import com.example.demo.model.dto.listfilling.CreateListsFillingDto;
 import com.example.demo.model.entity.Products;
 import com.example.demo.model.mapping.ProductsMapper;
-import org.aspectj.lang.annotation.After;
-import org.assertj.core.api.Assert;
+import com.example.demo.repositories.ListFillingRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.Assert.assertEquals;
 
-import org.springframework.boot.test.web.client.TestRestTemplate;
-
+import static org.mockito.ArgumentMatchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-import org.springframework.boot.web.server.LocalServerPort;
-import org.springframework.test.context.event.annotation.AfterTestClass;
-import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.mock.web.MockHttpServletRequest;
 
-import static org.hamcrest.Matchers.containsString;
+import javax.servlet.http.HttpServletRequest;
+
 import static org.assertj.core.api.Assertions.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
 @SpringBootTest
 class DemoApplicationTests {
 
+    @Autowired private MainController mainController;
+    @Autowired private ListController listController;
+    @Autowired private ListFillingRepository listFillingRepository;
+
+    @BeforeEach
+    public void clear(){
+        listFillingRepository.deleteAll();
+    }
+
+
+    @Test
+    public void CreateLord_LordDtoValid_CreatedSuccessfully(){
+        CreateListsFillingDto createListsFillingDto = new CreateListsFillingDto(anyString());
+
+        int size =  listFillingRepository.findAll().size();
+
+        HttpServletRequest httpServletRequest = new MockHttpServletRequest(anyString(), anyString());
+
+        //mainController.addListFilling(anyLong(), createListsFillingDto, httpServletRequest);
+
+        assertEquals(size+1, listFillingRepository.findAll().size());
+    }
 
     @Test
     public void shouldMapCarToDto() {

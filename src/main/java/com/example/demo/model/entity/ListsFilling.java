@@ -60,7 +60,7 @@ public class ListsFilling {
     private List<ProductComments> productComments;
 
     @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
     @JoinColumn(name = "id_list")
     private MyList lists;
 

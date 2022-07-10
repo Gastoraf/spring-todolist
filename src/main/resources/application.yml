@@ -10,11 +10,11 @@ spring:
     show-sql: true
   freemarker:
     expose-request-attributes: true
+  mvc.hiddenmethod.filter.enabled: true
   mail:
     host: smtp.yandex.ru
     username: gfdshgsdfhdsfh@yandex.ru
     password: gsdhsdhc4545%$V
     port: 465
     protocol: smtps
-    #    smtp - для не защищенного
     debug: true

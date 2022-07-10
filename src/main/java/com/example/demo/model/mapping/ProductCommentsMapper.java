@@ -1,6 +1,6 @@
 package com.example.demo.model.mapping;
 
-import com.example.demo.model.dto.ProductCommentsDto;
+import com.example.demo.model.dto.productcomments.ProductCommentsDto;
 import com.example.demo.model.entity.ProductComments;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

@@ -30,8 +30,8 @@ public class User implements UserDetails {
     private boolean active;
     @Column(name = "email")
     private String email;
-    @Column(name = "activation_code")
-    private String activation_code;
+    @Column(name = "activationCode")
+    private String 	activationCode;
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "user")

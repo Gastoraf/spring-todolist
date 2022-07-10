@@ -11,16 +11,12 @@ import java.util.List;
 @Repository
 public interface ListFillingRepository extends JpaRepository<ListsFilling, Long> {
 
-
-
+    //List<ListsFilling> findByCompletedTrueAndListsId(Long id);
     @Query(value = "SELECT * FROM lists_filling as l_f where l_f.id_list = :id_param and l_f.completed = 1", nativeQuery = true)
     List<ListsFilling> getListFillingByIdListCompletedTrue(@Param("id_param") Long id);
 
     @Query(value = "SELECT * FROM lists_filling as l_f where l_f.id_list = :id_param and l_f.completed = 0", nativeQuery = true)
     List<ListsFilling> getListFillingByIdListCompletedFalse(@Param("id_param") Long id);
-
-    @Query(value = "SELECT name FROM lists as l where l.id = :id_param", nativeQuery = true)
-    String getNameListFillingByIdList(@Param("id_param") Long id);
 
     @Query(value = "SELECT SUM(price) FROM `lists_filling` WHERE !completed AND id_list = :id_list", nativeQuery = true)
     Double findToBuyByIdList(@Param("id_list") Long id);

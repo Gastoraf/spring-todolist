@@ -30,19 +30,18 @@ public class UserServiceImpl implements UserService {
         user.setActive(true);
         user.getRoles().add(Role.ROLE_USER);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        user.setActivation_code(UUID.randomUUID().toString());
+        user.setActivationCode(UUID.randomUUID().toString());
         log.info("Saving new User with name: {}", userName);
         userRepository.save(user);
 
         if (!StringUtils.isEmpty(user.getEmail())) {
             String message = String.format(
-                    "Привет, %s \n" +
-                            "Добро пожаловать в Listcery. Пожалуйста, подтвердите Ваш аккаунт перейдя по следующей ссылке: http://localhost:8080/activate/%s",
+                    "%s, добро пожаловать в Listcery. Пожалуйста, подтвердите Ваш аккаунт перейдя по следующей ссылке: http://localhost:8080/activate/%s",
                     user.getName(),
-                    user.getActivation_code()
+                    user.getActivationCode()
             );
 
-            mailSenderService.send(user.getEmail(), "Activation code", message);
+            mailSenderService.send(user.getEmail(), "Listcery: подтвердите почту", message);
         }
 
         return true;
@@ -64,12 +63,12 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean activateUser(String code) {
-        User user = userRepository.findByActivation_code(code);
+        User user = userRepository.findByActivationCode(code);
         if (user == null) {
             return false;
         }
 
-        user.setActivation_code(null);
+        user.setActivationCode(null);
 
         userRepository.save(user);
 

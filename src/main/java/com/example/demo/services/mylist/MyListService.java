@@ -17,4 +17,6 @@ public interface MyListService {
 
     public MyList getMyListById(Long id);
 
+    public String getNameById(Long id);
+
 }

@@ -54,5 +54,11 @@ public class MyListServiceImpl implements MyListService {
         return listRepository.findById(id).orElse(null);
     }
 
+    @Override
+    public String getNameById(Long id) {
+        log.info("Get name by id: {}", id);
+        return listRepository.findNameById(id);
+    }
+
 
 }

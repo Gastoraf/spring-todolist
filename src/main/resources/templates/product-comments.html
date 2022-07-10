@@ -1,6 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="https://www.thymeleaf.org"
-      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<html lang="en" xmlns:th="https://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Listcery</title>
@@ -26,7 +25,7 @@
 
                             <div class="card-body">
                                 <form action="#" th:action="@{'/list/add/comment/' + ${product.id}}"
-                                      method="post">
+                                      th:method="post">
                                     <div class="row">
                                         <div class="col">
                                             <input type="text" name="comment" class="form-control"
@@ -47,9 +46,8 @@
                                     <li class="list-group-item">
 
                                         <!--  Удаление комментария  -->
-                                        <form action="#"
-                                              th:action="@{'/product/' + ${el.list_filling.id} + '/comment/delete/' + ${el.id}}"
-                                              method="post"
+                                        <form th:method="DELETE"
+                                              th:action="@{'/list/' + ${el.list_filling.id} + '/comment/delete/' + ${el.id}}"
                                               style="float: right">
                                             <button type="submit" class="btn btn-outline-danger border-0">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"

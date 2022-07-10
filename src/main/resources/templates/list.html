@@ -83,8 +83,8 @@
                 <br>
 
                 <!--        Изменить название у списка        -->
-                <form action="#" th:action="@{'/list/update/' + ${myListFromListService.id}}"
-                      th:object="${myListFromListService}" method="post">
+                <form th:action="@{'/list/update/name/' + ${myListFromListService.id}}"
+                      th:object="${myListFromListService}" th:method="PATCH">
                     Название списка: <input type="text" th:field="*{name}" class="form-control"
                                             placeholder="Название товара"/><br>
                     <input class="btn btn-success" type="submit" value="Изменить название"/>

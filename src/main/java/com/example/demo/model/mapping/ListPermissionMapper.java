@@ -1,6 +1,6 @@
 package com.example.demo.model.mapping;
 
-import com.example.demo.model.dto.ListPermissionDto;
+import com.example.demo.model.dto.listpermission.ListPermissionDto;
 import com.example.demo.model.entity.ListPermission;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

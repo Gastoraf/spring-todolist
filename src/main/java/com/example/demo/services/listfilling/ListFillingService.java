@@ -13,8 +13,6 @@ public interface ListFillingService {
 
     ListsFilling getListFillingById(Long id);
 
-    String getNameListFillingByIdList(Long idList);
-
     ListsFilling saveListFilling(ListsFilling listFilling);
 
     void deleteListFillingById(Long idListFilling);
