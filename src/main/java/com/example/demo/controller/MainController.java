@@ -40,7 +40,7 @@ public class MainController {
         User user = userService.getUserByName(request.getRemoteUser());
         model.addAttribute("myLists", myListService.findByIdUser(user.getId()));
         System.out.println("dfssdf: {}" + request.getRemoteUser());
-        return "home";
+        return "/home/home";
     }
 
     @GetMapping("/home/user/{id}")
@@ -57,7 +57,7 @@ public class MainController {
     }
 
     @GetMapping("/")
-    public String getHomePage() {
+    public String getMainPage() {
         return "main";
     }
 

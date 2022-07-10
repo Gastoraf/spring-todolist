@@ -18,3 +18,6 @@ spring:
     port: 465
     protocol: smtps
     debug: true
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
