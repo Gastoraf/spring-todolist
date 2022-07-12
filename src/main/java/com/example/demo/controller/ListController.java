@@ -3,27 +3,28 @@ package com.example.demo.controller;
 import com.example.demo.model.entity.*;
 import com.example.demo.model.mapping.ListsFillingMapper;
 import com.example.demo.model.mapping.ProductCommentsMapper;
-import com.example.demo.services.ProductsService;
-import com.example.demo.services.listfilling.ListFillingService;
-import com.example.demo.services.listpermission.ListPermissionService;
-import com.example.demo.services.mailsender.MailSenderService;
-import com.example.demo.services.mylist.MyListService;
-import com.example.demo.services.mypermission.MyPermissionService;
-import com.example.demo.services.productcomments.ProductCommentsService;
-import com.example.demo.services.user.UserService;
+import com.example.demo.service.ProductsService;
+import com.example.demo.service.listFilling.ListFillingService;
+import com.example.demo.service.listPermission.ListPermissionService;
+import com.example.demo.service.mailSender.MailSenderService;
+import com.example.demo.service.model.ModelService;
+import com.example.demo.service.myList.MyListService;
+import com.example.demo.service.myPermission.MyPermissionService;
+import com.example.demo.service.productComments.ProductCommentsService;
+import com.example.demo.service.user.UserService;
 import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.thymeleaf.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @Controller
-@AllArgsConstructor
+@RequiredArgsConstructor
 @RequestMapping("/list")
+@Slf4j
 public class ListController {
     private final ListFillingService listFillingService;
     private final ProductsService productService;
@@ -33,76 +34,62 @@ public class ListController {
     private final MyPermissionService myPermissionService;
     private final ProductCommentsService productCommentsService;
     private final MailSenderService mailSenderService;
+    private final ModelService modelService;
 
     private final ListsFillingMapper listsFillingMapper;
     private final ProductCommentsMapper productCommentsMapper;
 
     @GetMapping("/product/info/{idProduct}")
-    public String infoProductById(@PathVariable Long idProduct, Model model, @ModelAttribute MyList myListFromListService) {
-        model.addAttribute("product", listsFillingMapper.modelToDto(listFillingService.getListFillingById(idProduct)));
-        model.addAttribute("MyList", myListFromListService);
-        return "/product";
+    public String infoProductById(@PathVariable Long idProduct, Model model, @ModelAttribute MyList myList) {
+        modelService.addAttributeInfoProduct(model, listsFillingMapper.modelToDto(listFillingService.getListFillingById(idProduct)), myList);
+        return "/home/list/info/product";
     }
 
     @GetMapping("/product/comments/{idProduct}")
     public String commentsProductById(@PathVariable Long idProduct, Model model) {
-        model.addAttribute("comments", productCommentsMapper.modelToDto(productCommentsService.findByIdListsFilling(idProduct)) );
-        model.addAttribute("product", listsFillingMapper.modelToDto(listFillingService.getListFillingById(idProduct)));
-        return "/product-comments";
+        modelService.addAttributeCommentsProduct(model, productCommentsMapper.modelToDto(productCommentsService.findByIdListsFilling(idProduct)), listsFillingMapper.modelToDto(listFillingService.getListFillingById(idProduct)));
+        return "/home/list/comments/product-comments";
     }
 
 
-
     @PostMapping("/{idList}/completed/{id}")
-    public String completedListFilling(@PathVariable Long idList, @PathVariable Long id) {
-        ListsFilling listsFilling = listFillingService.getListFillingById(id);
-        listsFilling.setCompleted(!listsFilling.getCompleted());
+    public String updateCompletedListFilling(@PathVariable Long idList, @PathVariable Long id) {
 
-        listFillingService.saveListFilling(listsFilling);
+        //TODO: вывести пользователю "что-то пошло не так"
+        log.info("updateCompletedListFilling: {}", listFillingService.updateCompletedById(id));
+
         return "redirect:/home/" + idList;
     }
 
 
 
     @PostMapping("/update/date/{id}")
-    public String updateList(@PathVariable Long id, @ModelAttribute MyList myListParam) {
-        MyList myList = myListService.getMyListById(id);
-        myList.setDate_of_purchase(myListParam.getDate_of_purchase());
-        myListService.saveMyList(myList);
+    public String updateList(@PathVariable Long id, @ModelAttribute String newDate) {
+        myListService.updateDate(id, newDate);
 
         //Рассылка назначенных дат
         //TODO: создать метод в сервисе mapper->entity->services->entity->dto->front
-        mailSenderService.sendScheduledDates(myList, listPermissionService.getUsersListPermissionById(id));
-
+        //TODO: создать исключение
+        mailSenderService.sendScheduledDates(myListService.getMyListById(id), listPermissionService.getUsersListPermissionById(id));
 
         return "redirect:/home/" + id;
     }
 
     @PostMapping("/update/product/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute ListsFilling product) {
-        ListsFilling listsFilling = listFillingService.getListFillingById(id);
+    public String updateProduct(@PathVariable Long id, @ModelAttribute ListsFilling updateListsFilling) {
+        //TODO: создать исключение
 
-        product.setId(id);
-        product.setLists(listsFilling.getLists());
-        User user = userService.getUserByName(product.getUser().getName());
-        product.setUser(user);
-
-        listFillingService.saveListFilling(product);
-        return "redirect:/home/" + product.getLists().getId();
+        log.info("updateProduct: {}", listFillingService.updateListFilling(id, updateListsFilling));
+        return "redirect:/home/" + updateListsFilling.getLists().getId();
     }
 
 
 
     @PostMapping("/add_user/{idList}")
     public String addUserFromList(@RequestParam(name = "name", required = false) String nameUser, @PathVariable Long idList) {
+        //TODO: создать исключение
 
-        ListPermission listPermission = new ListPermission();
-
-        listPermission.setUser(userService.getUserByName(nameUser));
-        listPermission.setLists(myListService.getMyListById(idList));
-        listPermission.setMyPermission(myPermissionService.getMyPermissionById(2L));
-
-        listPermissionService.addListPermission(listPermission);
+        listPermissionService.addListPermission(nameUser, idList);
 
 
         return "redirect:/home/" + idList;
@@ -119,14 +106,11 @@ public class ListController {
 
 
     @PostMapping("/add/comment/{idProduct}")
-    public String addCommentsProduct(HttpServletRequest request, @PathVariable Long idProduct, @RequestParam(name = "comment", required = false) String comment, Model model) {
-        User user = userService.getUserByName(request.getRemoteUser());
-        ListsFilling listsFilling = listFillingService.getListFillingById(idProduct);
-        ProductComments productComments = new ProductComments();
-        productComments.setComment(comment);
-        productComments.setUser(user);
-        productComments.setList_filling(listsFilling);
-        productCommentsService.saveProductComment(productComments);
+    public String addCommentsProduct(HttpServletRequest request, @PathVariable Long idProduct, @RequestParam(name = "comment", required = false) String comment) {
+        //TODO: вынести все в сервис
+
+//        productCommentsService.saveProductComment(productComments);
+        productCommentsService.saveProductComment(request, idProduct, comment);
         return "redirect:/list/product/comments/" + idProduct;
     }
 
@@ -142,10 +126,9 @@ public class ListController {
         return "redirect:/list/product/comments/" + idProduct;
     }
 
-    @PostMapping("/{idList}/delete/{id}")
+    @DeleteMapping("/{idList}/delete/{id}")
     public String deleteListFilling(@PathVariable Long idList, @PathVariable Long id) {
         listFillingService.deleteListFillingById(id);
-//        listsFillingMapper.dtoToModel(listFillingService.deleteListFillingById(id));
 
         return "redirect:/home/" + idList;
     }

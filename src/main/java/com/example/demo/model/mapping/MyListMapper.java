@@ -1,6 +1,6 @@
 package com.example.demo.model.mapping;
 
-import com.example.demo.model.dto.mylist.MyListDto;
+import com.example.demo.model.dto.myList.MyListDto;
 import com.example.demo.model.entity.MyList;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

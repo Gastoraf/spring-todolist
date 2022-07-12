@@ -3,6 +3,7 @@ package com.example.demo.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
 
@@ -59,10 +60,15 @@ public class ListsFilling {
             cascade = CascadeType.ALL, mappedBy = "list_filling")
     private List<ProductComments> productComments;
 
-    @ToString.Exclude
-    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+//    @NotNull
+//    @ToString.Exclude
+//    @ManyToOne(fetch = FetchType.LAZY, cascade=CascadeType.ALL)
+//    @JoinColumn(name = "id_list")
+//    private MyList lists;
+
+    @ManyToOne
     @JoinColumn(name = "id_list")
-    private MyList lists;
+    private MyList myList;
 
     @Null
     @ToString.Exclude
@@ -72,10 +78,10 @@ public class ListsFilling {
 
 
     public MyList getLists() {
-        return lists;
+        return myList;
     }
 
-    public void setLists(MyList lists) {
-        this.lists = lists;
+    public void setLists(MyList myList) {
+        this.myList = myList;
     }
 }

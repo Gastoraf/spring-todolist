@@ -2,12 +2,12 @@ package com.example.demo;
 
 
 import com.example.demo.controller.ListController;
-import com.example.demo.controller.MainController;
+import com.example.demo.controller.HomeController;
 import com.example.demo.model.dto.products.ProductsDto;
-import com.example.demo.model.dto.listfilling.CreateListsFillingDto;
+import com.example.demo.model.dto.listFilling.CreateListsFillingDto;
 import com.example.demo.model.entity.Products;
 import com.example.demo.model.mapping.ProductsMapper;
-import com.example.demo.repositories.ListFillingRepository;
+import com.example.demo.repositorie.ListFillingRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,14 +28,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 @SpringBootTest
 class DemoApplicationTests {
 
-    @Autowired private MainController mainController;
+    @Autowired private HomeController homeController;
     @Autowired private ListController listController;
     @Autowired private ListFillingRepository listFillingRepository;
 
-    @BeforeEach
-    public void clear(){
-        listFillingRepository.deleteAll();
-    }
+//    @BeforeEach
+//    public void clear(){
+//        listFillingRepository.deleteAll();
+//    }
 
 
     @Test

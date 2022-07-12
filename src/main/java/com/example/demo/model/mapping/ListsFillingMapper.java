@@ -1,9 +1,9 @@
 package com.example.demo.model.mapping;
 
 
-import com.example.demo.model.dto.listfilling.CreateListsFillingDto;
+import com.example.demo.model.dto.listFilling.CreateListsFillingDto;
 
-import com.example.demo.model.dto.listfilling.ListsFillingDto;
+import com.example.demo.model.dto.listFilling.ListsFillingDto;
 import com.example.demo.model.entity.ListsFilling;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

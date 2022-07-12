@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="https://www.thymeleaf.org"
+      xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+          integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+
+    <div th:insert="parts/navbar :: navbar"></div>
+
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-3">
+                <h2>Найти список</h2>
+                <form th:action="@{/home/search}" method="get">
+                    <input class="form-control" type="text" name="name" placeholder="Название списка"/><br>
+                    <input type="submit" value="Найти" class="form-control btn btn-primary font-weight-bold"/>
+
+                </form>
+            </div>
+            <div class="col-sm-9">
+                <h2>Списки:</h2>
+                <!--    Список       -->
+                <div class="page-content page-container">
+                    <div class="padding">
+                        <div class="col-md-12">
+                            <div class="card-body">
+                                <form th:action="@{/home/create}" th:method="POST">
+                                    <div class="row">
+                                        <div class="col-9">
+                                            <input type="text" name="name" class="form-control"
+                                                   placeholder="Название списка">
+                                        </div>
+                                        <div class="col">
+                                            <input type="submit" class="form-control btn btn-primary font-weight-bold"
+                                                   value="Добавить список">
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                            <ul class="list-group">
+                                <th:block th:each="myList : ${myLists}">
+
+                                    <li class="list-group-item">
+
+                                        <a th:href="@{'/home/' + ${myList.id}}"
+                                           class="btn btn-outline-primary border-0">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16"
+                                                 height="16" fill="currentColor"
+                                                 class="bi bi-pencil" viewBox="0 0 16 16">
+                                                <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
+                                            </svg>
+                                        </a>
+                                        <!--  Удаление списка  -->
+                                        <form th:action = "@{'/home/delete/' + ${myList.id}}" th:method="DELETE" style="float: right">
+                                            <button type="submit" class="btn btn-outline-danger border-0">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                     fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+                                                    <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+                                                    <path fill-rule="evenodd"
+                                                          d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+                                                </svg>
+                                            </button>
+                                        </form>
+                                        <th:block th:utext="${myList.name}">
+                                        </th:block>
+
+
+                                    </li>
+                                </th:block>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+</div>
+
+</body>
+</html>

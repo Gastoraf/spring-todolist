@@ -7,11 +7,11 @@ import javax.persistence.*;
 import java.util.List;
 
 @Entity
-@Table(name = "lists")
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-
+@Table(name = "lists")
 public class MyList {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -22,7 +22,11 @@ public class MyList {
     @Column(name = "date_of_purchase")
     private String date_of_purchase;
 
-    @OneToMany(fetch = FetchType.LAZY,
-            cascade = CascadeType.ALL, mappedBy = "lists")
+//    @OneToMany(fetch = FetchType.LAZY,
+//            cascade = CascadeType.ALL, mappedBy = "lists")
+//    @OrderColumn
+//    private List<ListsFilling> listsFillings;
+
+    @OneToMany(mappedBy = "myList")
     private List<ListsFilling> listsFillings;
 }
