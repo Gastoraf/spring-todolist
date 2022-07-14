@@ -3,6 +3,8 @@ package com.example.demo.service.listFilling;
 import com.example.demo.model.dto.listFilling.CreateListsFillingDto;
 import com.example.demo.model.entity.ListsFilling;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -20,7 +22,7 @@ public interface ListFillingService {
 
     ListsFilling saveListFilling(Long id, CreateListsFillingDto createListsFillingDto, HttpServletRequest request);
 
-    void deleteListFillingById(Long idListFilling);
+    RedirectView deleteListFillingById(Long idList, Long idListFilling, RedirectView redirectView);
 
     //Калькулятор покупок
     Double getToBuyMyListById(Long id);
@@ -32,7 +34,7 @@ public interface ListFillingService {
     List getPurchasedBuyerByIdList(Long id);
 
 
-    ResponseEntity<ListsFilling> updateCompletedById(Long id);
+    RedirectView updateCompletedById(Long idList, Long id, RedirectAttributes redirectAttributes, RedirectView redirectView);
 
-    ResponseEntity<ListsFilling> updateListFilling(Long id, ListsFilling updateListsFilling);
+    RedirectView updateListFilling(Long id, ListsFilling updateListsFilling, RedirectView redirectView);
 }

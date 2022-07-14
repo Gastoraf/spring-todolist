@@ -38,6 +38,8 @@
 
 
 
+
+
     </style>
 </head>
 <body>
@@ -45,18 +47,21 @@
 <div class="container">
     <div th:insert="parts/navbar :: navbar"></div>
 
+    <div th:if="${MessageException != ''}" class="alert alert-danger" role="alert">
+        <span th:utext="${MessageException}"></span>
+    </div>
     <div class="container">
         <div class="row">
             <div class="col-sm-3">
                 <!--       Пользователи этого списка         -->
-
                 <h6>Пользователи списка: </h6>
                 <ol class="list-group list-group-numbered">
                     <th:block th:each="el : ${usersListPermission}">
                         <li class="list-group-item">
                             <span th:utext="${el.name}">..</span>
                             <!--  Удаление пользователя  -->
-                            <form action="#" th:action="@{'/list/' + ${myListFromListService.id} + '/delete_user/' + ${el.id}}"
+                            <form action="#"
+                                  th:action="@{'/list/' + ${myListFromListService.id} + '/delete_user/' + ${el.id}}"
                                   style="float: right" method="post">
                                 <button type="submit" class="btn btn-outline-danger border-0">
                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
@@ -111,7 +116,7 @@
                         <div class="padding">
                             <div class="col-md-12">
                                 <div class="card-body">
-                                    <form action="#" th:action="@{'/home/add/' + ${myListFromListService.id}}"
+                                    <form action="#" th:action="@{'/list/add/' + ${myListFromListService.id}}"
                                           th:object="${myListFilling}" method="post">
                                     <div class="row">
                                         <div class="col-9">
@@ -140,7 +145,7 @@
                             <div class="col-md-12">
 
                                 <div class="card-body">
-                                        <form action="#" th:action="@{'/home/add/' + ${myListFromListService.id}}"
+                                        <form action="#" th:action="@{'/list/add/' + ${myListFromListService.id}}"
                                               th:object="${myListFilling}" method="post">
                                             <div class="row">
                                                 <div class="col-9">

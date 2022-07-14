@@ -1,19 +1,21 @@
 package com.example.demo.model.entity;
 
 import lombok.*;
+import org.hibernate.Hibernate;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "lists_filling")
-@Data
+@ToString
+@RequiredArgsConstructor
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
+
 public class ListsFilling {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -41,7 +43,7 @@ public class ListsFilling {
     @Column(name = "category")
     private String category;
 
-    @Null
+
     @Column(name = "description")
     private String description;
 
@@ -58,6 +60,7 @@ public class ListsFilling {
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "list_filling")
+    @ToString.Exclude
     private List<ProductComments> productComments;
 
 //    @NotNull
@@ -70,7 +73,7 @@ public class ListsFilling {
     @JoinColumn(name = "id_list")
     private MyList myList;
 
-    @Null
+//    @Null
     @ToString.Exclude
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "id_buyer")
@@ -83,5 +86,18 @@ public class ListsFilling {
 
     public void setLists(MyList myList) {
         this.myList = myList;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
+        ListsFilling that = (ListsFilling) o;
+        return id != null && Objects.equals(id, that.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return getClass().hashCode();
     }
 }

@@ -5,6 +5,7 @@ import com.example.demo.model.dto.productcomments.ProductCommentsDto;
 import com.example.demo.model.entity.MyList;
 import com.example.demo.service.myList.MyListService;
 import org.springframework.ui.Model;
+import org.springframework.ui.ModelMap;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
@@ -17,4 +18,6 @@ public interface ModelService {
     void getMyLists(Model model, List<MyList> myLists);
 
     void getInfoMyList(Model model, Long id);
+
+    void getMessageException(Model model, String e);
 }

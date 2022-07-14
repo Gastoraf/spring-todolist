@@ -23,12 +23,16 @@ public class MyListServiceImpl implements MyListService {
     @Override
     public List<MyList> getListByName(String name, Long idUser) {
         List<MyList> myLists = listRepository.findByIdUser(idUser);
-        for (MyList myList : myLists) {
-            if (Objects.equals(myList.getName(), name)) {
-                List<MyList> myLists1 = new ArrayList<>();
-                myLists1.add(myList);
-                return myLists1;
-            }
+
+        MyList myList = myLists.stream()
+                .filter(customer -> name.equals(customer.getName()))
+                .findAny()
+                .orElse(null);
+
+        if (myList != null) {
+            myLists = new ArrayList<>();
+            myLists.add(myList);
+            return myLists;
         }
         return myLists;
     }

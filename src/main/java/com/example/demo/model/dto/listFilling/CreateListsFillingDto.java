@@ -11,6 +11,10 @@ import lombok.Setter;
 @AllArgsConstructor
 public class CreateListsFillingDto {
 
+
+    private Double id_list;
     private String name_product;
+    private Boolean completed;
+    private Double id_buyer;
 
 }

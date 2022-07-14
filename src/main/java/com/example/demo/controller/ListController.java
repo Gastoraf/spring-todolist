@@ -1,9 +1,9 @@
 package com.example.demo.controller;
 
+import com.example.demo.model.dto.listFilling.CreateListsFillingDto;
 import com.example.demo.model.entity.*;
 import com.example.demo.model.mapping.ListsFillingMapper;
 import com.example.demo.model.mapping.ProductCommentsMapper;
-import com.example.demo.service.ProductsService;
 import com.example.demo.service.listFilling.ListFillingService;
 import com.example.demo.service.listPermission.ListPermissionService;
 import com.example.demo.service.mailSender.MailSenderService;
@@ -12,12 +12,13 @@ import com.example.demo.service.myList.MyListService;
 import com.example.demo.service.myPermission.MyPermissionService;
 import com.example.demo.service.productComments.ProductCommentsService;
 import com.example.demo.service.user.UserService;
-import lombok.AllArgsConstructor;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -27,7 +28,6 @@ import javax.servlet.http.HttpServletRequest;
 @Slf4j
 public class ListController {
     private final ListFillingService listFillingService;
-    private final ProductsService productService;
     private final MyListService myListService;
     private final ListPermissionService listPermissionService;
     private final UserService userService;
@@ -38,6 +38,13 @@ public class ListController {
 
     private final ListsFillingMapper listsFillingMapper;
     private final ProductCommentsMapper productCommentsMapper;
+
+    @GetMapping("/{id}")
+    public String listInfoById(@PathVariable Long id, Model model, @ModelAttribute("getMessage") String eMessage) {
+        modelService.getInfoMyList(model, id);
+        modelService.getMessageException(model, eMessage);
+        return "home/list/list";
+    }
 
     @GetMapping("/product/info/{idProduct}")
     public String infoProductById(@PathVariable Long idProduct, Model model, @ModelAttribute MyList myList) {
@@ -51,16 +58,23 @@ public class ListController {
         return "/home/list/comments/product-comments";
     }
 
+    @PostMapping("/add/{id}")
+    public String addListFilling(@PathVariable Long id, @ModelAttribute CreateListsFillingDto createListsFillingDto, HttpServletRequest request) {
 
-    @PostMapping("/{idList}/completed/{id}")
-    public String updateCompletedListFilling(@PathVariable Long idList, @PathVariable Long id) {
+        listFillingService.saveListFilling(id, createListsFillingDto, request);
 
-        //TODO: вывести пользователю "что-то пошло не так"
-        log.info("updateCompletedListFilling: {}", listFillingService.updateCompletedById(id));
-
-        return "redirect:/home/" + idList;
+        return "redirect:/list/" + id;
     }
 
+
+    @PostMapping("/{idList}/completed/{id}")
+    public RedirectView updateCompletedListFilling(@PathVariable Long idList, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
+
+        log.info("update Completed List Filling: {}", id);
+
+        return listFillingService.updateCompletedById(idList, id, redirectAttributes, new RedirectView("/list/" + idList, true));
+
+    }
 
 
     @PostMapping("/update/date/{id}")
@@ -72,17 +86,16 @@ public class ListController {
         //TODO: создать исключение
         mailSenderService.sendScheduledDates(myListService.getMyListById(id), listPermissionService.getUsersListPermissionById(id));
 
-        return "redirect:/home/" + id;
+        return "redirect:/list/" + id;
     }
 
     @PostMapping("/update/product/{id}")
-    public String updateProduct(@PathVariable Long id, @ModelAttribute ListsFilling updateListsFilling) {
+    public RedirectView updateProduct(@PathVariable Long id, final RedirectAttributes redirectAttributes, @ModelAttribute ListsFilling updateListsFilling) {
         //TODO: создать исключение
 
-        log.info("updateProduct: {}", listFillingService.updateListFilling(id, updateListsFilling));
-        return "redirect:/home/" + updateListsFilling.getLists().getId();
+        log.info("updateProduct: {}", id);
+        return listFillingService.updateListFilling(id, updateListsFilling, new RedirectView("/list/" + updateListsFilling.getLists().getId(), true));
     }
-
 
 
     @PostMapping("/add_user/{idList}")
@@ -92,7 +105,7 @@ public class ListController {
         listPermissionService.addListPermission(nameUser, idList);
 
 
-        return "redirect:/home/" + idList;
+        return "redirect:/list/" + idList;
     }
 
     @PostMapping("/{idList}/delete_user/{idUser}")
@@ -100,9 +113,8 @@ public class ListController {
 
         listPermissionService.deleteById_userAndId_list(idUser, idList);
 
-        return "redirect:/home/" + idList;
+        return "redirect:/list/" + idList;
     }
-
 
 
     @PostMapping("/add/comment/{idProduct}")
@@ -115,9 +127,9 @@ public class ListController {
     }
 
     @PatchMapping("/update/name/{id}")
-    public String updateNameList(@PathVariable Long id, @ModelAttribute MyList myListFromListService) {
+    public String patchingNameList(@PathVariable Long id, @ModelAttribute MyList myListFromListService) {
         myListService.saveMyList(myListFromListService);
-        return "redirect:/home/" + id;
+        return "redirect:/list/" + id;
     }
 
     @DeleteMapping("/{idProduct}/comment/delete/{id}")
@@ -127,9 +139,7 @@ public class ListController {
     }
 
     @DeleteMapping("/{idList}/delete/{id}")
-    public String deleteListFilling(@PathVariable Long idList, @PathVariable Long id) {
-        listFillingService.deleteListFillingById(id);
-
-        return "redirect:/home/" + idList;
+    public RedirectView deleteListFilling(@PathVariable Long idList, @PathVariable Long id, final RedirectAttributes redirectAttributes) {
+        return listFillingService.deleteListFillingById(idList, id, new RedirectView("/list/" + idList, true));
     }
 }

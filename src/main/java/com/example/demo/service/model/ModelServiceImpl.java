@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @Service
@@ -60,8 +59,13 @@ public class ModelServiceImpl implements ModelService {
         model.addAttribute("Purchased", listFillingService.getPurchasedMyListById(id));
         model.addAttribute("ActualPurchased", listFillingService.getActualPurchasedMyListById(id));
         model.addAttribute("PurchasedBuyer", listFillingService.getPurchasedBuyerByIdList(id));
-        //
+
         model.addAttribute("newUser", new User());
+    }
+
+    @Override
+    public void getMessageException(Model model, String e) {
+        model.addAttribute("MessageException", e);
     }
 
 
