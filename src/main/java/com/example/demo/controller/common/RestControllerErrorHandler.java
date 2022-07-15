@@ -41,7 +41,7 @@ public class RestControllerErrorHandler {
     public RedirectView handleAccessRuntimeException(AccessRuntimeException exception, RedirectAttributes redirectAttributes, HttpServletRequest req) {
         log.error(exception.getMessage());
 
-        redirectAttributes.addFlashAttribute("getMessage", exception.getMessage());
+        redirectAttributes.addFlashAttribute("exceptionMessage", exception.getMessage());
 
         return exception.getRedirectView();
     }

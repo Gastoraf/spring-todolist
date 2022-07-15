@@ -38,14 +38,16 @@ public class ListFillingServiceImpl implements ListFillingService {
 
     @Override
     public List<ListsFilling> getListFillingByIdListCompletedTrue(Long idList) {
-        log.info("findByCompletedTrueAndListsId {}", listFillingRepository.getListFillingByIdListCompletedTrue(idList));
-        return listFillingRepository.getListFillingByIdListCompletedTrue(idList);
+        log.info("findByCompletedTrueAndListsId {}", idList);
+        return listFillingRepository.getListFillingByIdListCompletedTrue(idList).orElseThrow(() -> new AccessRuntimeException("Не удалось найти.",
+                HttpStatus.NOT_FOUND));
     }
 
     @Override
     public List<ListsFilling> getListFillingByIdListCompletedFalse(Long idList) {
         log.info("getListFillingByIdListCompletedFalse {}", listFillingRepository.getListFillingByIdListCompletedFalse(idList));
-        return listFillingRepository.getListFillingByIdListCompletedFalse(idList);
+        return listFillingRepository.getListFillingByIdListCompletedFalse(idList).orElseThrow(() -> new AccessRuntimeException("Не удалось найти.",
+                HttpStatus.NOT_FOUND));
     }
 
     @Override
@@ -120,19 +122,23 @@ public class ListFillingServiceImpl implements ListFillingService {
     }
 
     @Override
-    public RedirectView updateListFilling(Long id, ListsFilling updateListsFilling, RedirectView redirectView) {
+    public RedirectView updateListFilling(Long id, ListsFilling updateListsFilling) {
 
-        ListsFilling listsFilling = listFillingRepository.findById(id).orElseThrow(() -> new AccessRuntimeException(
-                "Элемент списка не найден. Попробуйте еще раз.",
-                HttpStatus.NOT_FOUND, redirectView));
+        RedirectView redirectView = new RedirectView("/list/product/info/" + id, true);
+
+        ListsFilling listsFilling = listFillingRepository.findById(id)
+                .orElseThrow(() -> new AccessRuntimeException("Не удалось сохранить элемент. Попробуйте еще раз.",
+                        HttpStatus.NOT_FOUND, redirectView));
+
+        User user = userRepository.findById(listsFilling.getUser().getId())
+                .orElseThrow(() -> new AccessRuntimeException("Не удалось сохранить элемент. Попробуйте еще раз.",
+                        HttpStatus.NOT_FOUND, redirectView));
 
         updateListsFilling.setId(id);
         updateListsFilling.setLists(listsFilling.getLists());
-
-//            User user = userService.getUserById(updateListsFilling.getUser().getId());
-        User user = userRepository.findById(updateListsFilling.getUser().getId()).orElse(null);
         updateListsFilling.setUser(user);
-        return redirectView;
+        listFillingRepository.save(updateListsFilling);
+        return new RedirectView("/list/" + listsFilling.getLists().getId(), true);
 
     }
 

@@ -2,6 +2,7 @@ package com.example.demo.model.entity;
 
 import lombok.*;
 import org.hibernate.Hibernate;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import javax.validation.constraints.Null;
@@ -15,7 +16,7 @@ import java.util.Objects;
 @Getter
 @Setter
 @AllArgsConstructor
-
+@Component
 public class ListsFilling {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

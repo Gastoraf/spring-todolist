@@ -13,9 +13,15 @@
 
 <div class="container-fluid d-flex h-100 justify-content-center align-items-center p-0">
 
-    <div class="row bg-white shadow-sm">
+    <div th:if="${MessageException != ''}" class="alert alert-danger" role="alert">
+        <span th:utext="${MessageException}"></span>
+    </div>
 
+    <div class="row bg-white shadow-sm">
         <div class="col border rounded p-4">
+
+            <span th:utext="${MessageException}"></span>
+
             <h3 class="text-center mb-4">Вход</h3>
             <span class="text-success" th:utext="${messageSuccess}">..</span>
             <span class="text-danger" th:utext="${messageDanger}">..</span>

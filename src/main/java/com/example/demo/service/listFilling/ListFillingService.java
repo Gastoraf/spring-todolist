@@ -36,5 +36,5 @@ public interface ListFillingService {
 
     RedirectView updateCompletedById(Long idList, Long id, RedirectAttributes redirectAttributes, RedirectView redirectView);
 
-    RedirectView updateListFilling(Long id, ListsFilling updateListsFilling, RedirectView redirectView);
+    RedirectView updateListFilling(Long id, ListsFilling updateListsFilling);
 }

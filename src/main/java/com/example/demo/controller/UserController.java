@@ -1,11 +1,13 @@
 package com.example.demo.controller;
 
 import com.example.demo.model.entity.User;
+import com.example.demo.service.model.ModelService;
 import com.example.demo.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 
@@ -13,9 +15,11 @@ import org.springframework.web.bind.annotation.PostMapping;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final ModelService modelService;
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@ModelAttribute("exceptionMessage") String eMessage, Model model) {
+        modelService.getMessageException(model, eMessage);
         return "/security/login";
     }
 

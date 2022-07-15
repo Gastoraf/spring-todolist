@@ -1,8 +1,6 @@
 package com.example.demo.model.entity;
 
 
-import com.example.demo.model.entity.ListsFilling;
-import com.example.demo.model.entity.ProductComments;
 import com.example.demo.model.enums.Role;
 import lombok.Data;
 import org.springframework.security.core.GrantedAuthority;
@@ -30,8 +28,8 @@ public class User implements UserDetails {
     private boolean active;
     @Column(name = "email")
     private String email;
-    @Column(name = "activationCode")
-    private String 	activationCode;
+    @Column(name = "activation_code")
+    private String 	activation_code;
 
     @OneToMany(fetch = FetchType.LAZY,
             cascade = CascadeType.ALL, mappedBy = "user")
@@ -43,11 +41,13 @@ public class User implements UserDetails {
 
     @Column(name = "password", length = 1000)
     private String password;
+
     @ElementCollection(targetClass = Role.class, fetch = FetchType.EAGER)
     @CollectionTable(name = "user_role",
             joinColumns = @JoinColumn(name = "user_id"))
     @Enumerated(EnumType.STRING)
     private Set<Role> roles = new HashSet<>();
+
     private LocalDateTime dateOfCreated;
 
     @PrePersist

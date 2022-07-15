@@ -2,6 +2,7 @@ package com.example.demo.configuration;
 
 import com.example.demo.service.user.CustomUserDetailsService;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
@@ -14,18 +15,24 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 
 @AllArgsConstructor
 public class SecurityConfig extends WebSecurityConfigurerAdapter {
-    private  CustomUserDetailsService userDetailsService;
+    private CustomUserDetailsService userDetailsService;
+
+
+
+    @Autowired
+    private AuthFailureHandler authFailureHandler;
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
                 .authorizeRequests()
-                .antMatchers("/help/**", "/registration", "/", "/blog/**", "/activate/**")
+                .antMatchers("/help/**", "/login*" , "/registration", "/", "/blog/**", "/activate/**")
                 .permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
                 .loginPage("/login")
+                .failureHandler(authFailureHandler)
                 .permitAll()
                 .and()
                 .logout()
@@ -43,3 +50,4 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder(8);
     }
 }
+

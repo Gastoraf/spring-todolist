@@ -41,14 +41,10 @@ public class ModelServiceImpl implements ModelService {
 
     @Override
     public void getInfoMyList(Model model, Long id) {
-        if ((long) listFillingService.getListFillingByIdListCompletedTrue(id).size() == 0) {
-            model.addAttribute("myListFromFillingServiceCompletedTrue", 0);
-        } else {
+        if ((long) listFillingService.getListFillingByIdListCompletedTrue(id).size() != 0) {
             model.addAttribute("myListFromFillingServiceCompletedTrue", listFillingService.getListFillingByIdListCompletedTrue(id));
         }
-        if ((long) listFillingService.getListFillingByIdListCompletedFalse(id).size() == 0) {
-            model.addAttribute("myListFromFillingServiceCompletedFalse", 0);
-        } else {
+        if ((long) listFillingService.getListFillingByIdListCompletedFalse(id).size() != 0) {
             model.addAttribute("myListFromFillingServiceCompletedFalse", listFillingService.getListFillingByIdListCompletedFalse(id));
         }
         model.addAttribute("usersListPermission", listPermissionService.getUsersListPermissionById(id));

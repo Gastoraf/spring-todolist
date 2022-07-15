@@ -40,15 +40,16 @@ public class ListController {
     private final ProductCommentsMapper productCommentsMapper;
 
     @GetMapping("/{id}")
-    public String listInfoById(@PathVariable Long id, Model model, @ModelAttribute("getMessage") String eMessage) {
+    public String listInfoById(@PathVariable Long id, Model model, @ModelAttribute("exceptionMessage") String eMessage) {
         modelService.getInfoMyList(model, id);
         modelService.getMessageException(model, eMessage);
         return "home/list/list";
     }
 
     @GetMapping("/product/info/{idProduct}")
-    public String infoProductById(@PathVariable Long idProduct, Model model, @ModelAttribute MyList myList) {
+    public String infoProductById(@PathVariable Long idProduct, Model model, @ModelAttribute MyList myList, @ModelAttribute("exceptionMessage") String eMessage) {
         modelService.addAttributeInfoProduct(model, listsFillingMapper.modelToDto(listFillingService.getListFillingById(idProduct)), myList);
+        modelService.getMessageException(model, eMessage);
         return "/home/list/info/product";
     }
 
@@ -90,11 +91,12 @@ public class ListController {
     }
 
     @PostMapping("/update/product/{id}")
-    public RedirectView updateProduct(@PathVariable Long id, final RedirectAttributes redirectAttributes, @ModelAttribute ListsFilling updateListsFilling) {
+    public RedirectView updateProduct(@ModelAttribute("product") ListsFilling updateListsFilling, @PathVariable Long id) {
         //TODO: создать исключение
 
         log.info("updateProduct: {}", id);
-        return listFillingService.updateListFilling(id, updateListsFilling, new RedirectView("/list/" + updateListsFilling.getLists().getId(), true));
+        log.info("updateProduct: {}", updateListsFilling.getLists());
+        return listFillingService.updateListFilling(id, updateListsFilling);
     }
 
 

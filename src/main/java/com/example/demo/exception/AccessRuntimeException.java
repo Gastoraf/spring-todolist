@@ -11,6 +11,12 @@ public class AccessRuntimeException extends RuntimeException {
     private HttpStatus httpStatus;
     private RedirectView redirectView;
 
+    public AccessRuntimeException(RedirectView redirectView, String message, HttpStatus httpStatus) {
+        super(message);
+        this.httpStatus = httpStatus;
+        this.redirectView = redirectView;
+    }
+
     public AccessRuntimeException(String message, HttpStatus httpStatus, RedirectView redirectView) {
         super(message);
         this.httpStatus = httpStatus;

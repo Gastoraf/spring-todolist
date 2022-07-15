@@ -108,7 +108,7 @@
                 <td>
 
                     <!--       Если в списке нет элементов         -->
-                    <span th:if="${myListFromFillingServiceCompletedFalse == 0}">
+                    <span th:if="${myListFromFillingServiceCompletedFalse == null}">
 
                     <h2 th:utext="${myListFromListService.name}">..</h2>
                         <!--    Список       -->
@@ -137,7 +137,7 @@
                 </span>
 
                     <!--       Не купленные товары-->
-                    <span th:if="${myListFromFillingServiceCompletedFalse != 0}">
+                    <span th:if="${myListFromFillingServiceCompletedFalse != null}">
                     <h2 th:utext="${myListFromFillingServiceCompletedFalse[0].lists.name}">..</h2>
                         <!--    Список       -->
                     <div class="page-content page-container">
@@ -263,7 +263,7 @@
                 </span> <br>
 
                     <!--       Если в списке есть элементы помеченные галочкой         -->
-                    <span th:if="${myListFromFillingServiceCompletedTrue != 0}">
+                    <span th:if="${myListFromFillingServiceCompletedTrue != null}">
                     <h2>Куплено:</h2>
                         <!--    Список       -->
                     <div class="page-content page-container">

@@ -7,10 +7,11 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
+import java.util.Optional;
 
 @Repository
 public interface UserRepository extends JpaRepository<User, Long> {
-    User findByName(String name);
+    Optional<User> findByName(String name);
 
     //Вернуть пользователей по id списка
     @Query(value = "SELECT u.* FROM users u, list_permission l_p WHERE u.id = l_p.id_user AND l_p.id_list = :id_list", nativeQuery = true)
@@ -19,6 +20,6 @@ public interface UserRepository extends JpaRepository<User, Long> {
 //    @Query(value = "SELECT u.* FROM users u WHERE u.activationCode = :code", nativeQuery = true)
 //    User findByActivation_code(@Param("code") String code);
 
-    User findByActivationCode(String code);
+
 
 }
