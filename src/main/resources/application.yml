@@ -13,8 +13,8 @@ spring:
   mvc.hiddenmethod.filter.enabled: true
   mail:
     host: smtp.yandex.ru
-    username: gfdshgsdfhdsfh@yandex.ru
-    password: gsdhsdhc4545%$V
+    username: ?
+    password: ?
     port: 465
     protocol: smtps
     debug: true
